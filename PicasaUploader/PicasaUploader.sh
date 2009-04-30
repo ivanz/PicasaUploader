@@ -1,0 +1,1 @@
+﻿mono PicasaUploader.exe
