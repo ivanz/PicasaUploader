@@ -70,6 +70,7 @@
 			this.aboutButton = new System.Windows.Forms.Button ();
 			this.nextButton = new System.Windows.Forms.Button ();
 			this.backButton = new System.Windows.Forms.Button ();
+			this.rememberCheckBox = new System.Windows.Forms.CheckBox ();
 			this.tabControl1.SuspendLayout ();
 			this.loginTab.SuspendLayout ();
 			this.albumsTab.SuspendLayout ();
@@ -108,6 +109,7 @@
 			// 
 			// loginTab
 			// 
+			this.loginTab.Controls.Add (this.rememberCheckBox);
 			this.loginTab.Controls.Add (this.label6);
 			this.loginTab.Controls.Add (this.label5);
 			this.loginTab.Controls.Add (this.passwordTextBox);
@@ -125,7 +127,7 @@
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point (134, 138);
+			this.label6.Location = new System.Drawing.Point (126, 129);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size (56, 13);
 			this.label6.TabIndex = 19;
@@ -135,7 +137,7 @@
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point (132, 112);
+			this.label5.Location = new System.Drawing.Point (124, 103);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size (58, 13);
 			this.label5.TabIndex = 18;
@@ -144,9 +146,9 @@
 			// passwordTextBox
 			// 
 			this.passwordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.passwordTextBox.Location = new System.Drawing.Point (196, 135);
+			this.passwordTextBox.Location = new System.Drawing.Point (188, 126);
 			this.passwordTextBox.Name = "passwordTextBox";
-			this.passwordTextBox.Size = new System.Drawing.Size (182, 20);
+			this.passwordTextBox.Size = new System.Drawing.Size (197, 20);
 			this.passwordTextBox.TabIndex = 2;
 			this.passwordTextBox.UseSystemPasswordChar = true;
 			this.passwordTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler (this.passwordTextBox_KeyUp);
@@ -154,9 +156,9 @@
 			// usernameTextBox
 			// 
 			this.usernameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.usernameTextBox.Location = new System.Drawing.Point (196, 109);
+			this.usernameTextBox.Location = new System.Drawing.Point (188, 100);
 			this.usernameTextBox.Name = "usernameTextBox";
-			this.usernameTextBox.Size = new System.Drawing.Size (182, 20);
+			this.usernameTextBox.Size = new System.Drawing.Size (197, 20);
 			this.usernameTextBox.TabIndex = 1;
 			// 
 			// label3
@@ -518,7 +520,7 @@
 			this.nextButton.Location = new System.Drawing.Point (421, 286);
 			this.nextButton.Name = "nextButton";
 			this.nextButton.Size = new System.Drawing.Size (84, 23);
-			this.nextButton.TabIndex = 3;
+			this.nextButton.TabIndex = 4;
 			this.nextButton.Text = "Next";
 			this.nextButton.UseVisualStyleBackColor = true;
 			this.nextButton.Click += new System.EventHandler (this.nextButton_Click);
@@ -531,11 +533,22 @@
 			this.backButton.Location = new System.Drawing.Point (330, 286);
 			this.backButton.Name = "backButton";
 			this.backButton.Size = new System.Drawing.Size (84, 23);
-			this.backButton.TabIndex = 13;
+			this.backButton.TabIndex = 5;
 			this.backButton.Text = "Back";
 			this.backButton.UseVisualStyleBackColor = true;
 			this.backButton.Visible = false;
 			this.backButton.Click += new System.EventHandler (this.backButton_Click);
+			// 
+			// rememberCheckBox
+			// 
+			this.rememberCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.rememberCheckBox.AutoSize = true;
+			this.rememberCheckBox.Location = new System.Drawing.Point (229, 152);
+			this.rememberCheckBox.Name = "rememberCheckBox";
+			this.rememberCheckBox.Size = new System.Drawing.Size (156, 17);
+			this.rememberCheckBox.TabIndex = 3;
+			this.rememberCheckBox.Text = "Remember login information";
+			this.rememberCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// PicasaUploaderForm
 			// 
@@ -618,6 +631,7 @@
 		private System.Windows.Forms.Label photosToAddCountLabel;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Button aboutButton;
+		private System.Windows.Forms.CheckBox rememberCheckBox;
 	}
 }
 

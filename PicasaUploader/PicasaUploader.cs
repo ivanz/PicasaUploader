@@ -20,6 +20,7 @@ using System.Threading;
 
 using Google.GData.Photos;
 using Google.GData.Client;
+using PicasaUploader.Properties;
 
 namespace PicasaUploader
 {
@@ -40,6 +41,7 @@ namespace PicasaUploader
 			_photosCache = new Dictionary<string, ListViewItem> ();
 			_photos = new List<string> ();
 			usernameTextBox.Select ();
+			LoadUserCredentials ();
 			openFileDialog.InitialDirectory = Environment.GetFolderPath (Environment.SpecialFolder.MyPictures);
 
 			// If sendToFiles has files of format which we support then we are in Send To mode.
@@ -54,6 +56,40 @@ namespace PicasaUploader
 		public PicasaUploaderForm() : this (null)
 		{
 		}
+
+
+		private void LoadUserCredentials ()
+		{
+			if (Settings.Default.Username != string.Empty) {
+				usernameTextBox.Text = CryptoStringUtil.DecryptString (Settings.Default.Username);
+				rememberCheckBox.Checked = true;
+			}
+
+			if (Settings.Default.Password != string.Empty) {
+				passwordTextBox.Text = CryptoStringUtil.DecryptString (Settings.Default.Password);
+				rememberCheckBox.Checked = true;
+			}
+		}
+
+
+		private void StoreUserCredentials ()
+		{
+			if (Settings.Default.Username == string.Empty)
+				Settings.Default.Username = CryptoStringUtil.EncryptString (usernameTextBox.Text);
+
+			if (Settings.Default.Password == string.Empty)
+				Settings.Default.Password = CryptoStringUtil.EncryptString (passwordTextBox.Text);
+
+			Settings.Default.Save ();
+		}
+
+		private void PurgeUserCredentials ()
+		{
+			Settings.Default.Username = string.Empty;
+			Settings.Default.Password = string.Empty;
+			Settings.Default.Save ();
+		}
+
 
 		private void SetFileDialogFilter ()
 		{
@@ -241,6 +277,10 @@ namespace PicasaUploader
 				actionLabel.Text = "Logging in";
 			});
 
+			if (!rememberCheckBox.Checked)
+				PurgeUserCredentials ();
+
+
 			ThreadPool.QueueUserWorkItem (delegate {
 				if (!_picasa.Login (usernameTextBox.Text, passwordTextBox.Text)) {
 					this.Invoke ((MethodInvoker)delegate {
@@ -250,7 +290,8 @@ namespace PicasaUploader
 							MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					});
 				} else {
-
+					if (rememberCheckBox.Checked)
+						StoreUserCredentials ();
 					this.Invoke ((MethodInvoker)delegate {
 						nextButton.Enabled = true;
 						actionLabel.Text = READY_LABEL;

@@ -37,10 +37,12 @@
     <Reference Include="Google.GData.Extensions, Version=1.4.0.2, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL" />
     <Reference Include="Google.GData.Photos, Version=1.4.0.2, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -60,6 +62,7 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="CryptoString.cs" />
     <Compile Include="DuplicateAction.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -125,6 +128,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Compile Include="UnixTime.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -145,6 +149,7 @@
     <None Include="Resources\list-add.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Google.GData.Client.dll.config">
     </None>
     <None Include="PicasaUploader.sh">
