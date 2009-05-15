@@ -354,6 +354,17 @@
                     }
                 }
             }
+            "{1525181F-901A-416C-8A58-119130FE478E}:_C18C5A5B2B004856B93C0C3084DB0564"
+            {
+            "Name" = "8:#1920"
+            "AlwaysCreate" = "11:FALSE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Property" = "8:SendToFolder"
+                "Folders"
+                {
+                }
+            }
         }
         "LaunchCondition"
         {
@@ -371,7 +382,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PicasaUploader"
         "ProductCode" = "8:{9E27B552-ED22-4161-8347-F29AD4092064}"
-        "PackageCode" = "8:{07751AC6-7793-4ECB-AD55-7E0B75B095A6}"
+        "PackageCode" = "8:{7061D264-947F-428A-90D5-C6459F850B9E}"
         "UpgradeCode" = "8:{988174A5-9971-4CE9-B9E2-1A5F58C791F5}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -393,7 +404,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:\"..\\WiRunSql.vbs\" \"$(BuiltOuputPath)\" \"INSERT INTO Property(Property, Value) VALUES ('DISABLEADVTSHORTCUTS', '1')\""
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -490,6 +501,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_246422DFE4EE4E25AA9227D3B5DF59B2"
+            {
+            "Name" = "8:PicasaWeb"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_768813A28916460DA9C341499119A4C4"
+            "Folder" = "8:_C18C5A5B2B004856B93C0C3084DB0564"
+            "WorkingFolder" = "8:_3C8029ECFB1A4DEE92C152F0B381AF7E"
+            "Icon" = "8:_6F2C992902F247E6A86E8B4C71D22E85"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D066982FC6744BBA8E3A70EFCB3DDCC9"
             {
             "Name" = "8:PicasaUploader"

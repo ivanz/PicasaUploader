@@ -20,13 +20,13 @@ namespace PicasaUploader
 	static class Program
 	{
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
 			try {
 				AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler (CurrentDomain_UnhandledException);
 				Application.EnableVisualStyles ();
 				Application.SetCompatibleTextRenderingDefault (false);
-				Application.Run (new PicasaUploaderForm ());
+				Application.Run (new PicasaUploaderForm (args));
 			} catch (Exception e) {
 				UnhandledExceptionHandler (e);
 			}

@@ -31,15 +31,28 @@ namespace PicasaUploader
 		private List<string> _photos;
 		private Dictionary<string, ListViewItem> _photosCache;
 		private AlbumInfo _selectedAlbum = null;
+		private bool _sendToMode = true;
 
-		public PicasaUploaderForm()
+		public PicasaUploaderForm (string[] sendToFiles)
 		{
-			InitializeComponent();
+			InitializeComponent ();
 			_picasa = new PicasaController ();
 			_photosCache = new Dictionary<string, ListViewItem> ();
 			_photos = new List<string> ();
 			usernameTextBox.Select ();
 			openFileDialog.InitialDirectory = Environment.GetFolderPath (Environment.SpecialFolder.MyPictures);
+
+			// If sendToFiles has files of format which we support then we are in Send To mode.
+			if (sendToFiles != null && sendToFiles.Length > 0) {
+				_photos.AddRange (sendToFiles.Where (filePath => File.Exists (filePath) && 
+										PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (filePath))));
+				if (_photos.Count > 0)
+					_sendToMode = true;
+			}
+		}
+
+		public PicasaUploaderForm() : this (null)
+		{
 		}
 
 		private void SetFileDialogFilter ()
@@ -74,14 +87,16 @@ namespace PicasaUploader
 					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			} else {
 				_selectedAlbum = (AlbumInfo)albumsListView.SelectedItems[0].Tag;
-				_photos.Clear ();
+				if (!_sendToMode) {
+					_photos.Clear ();
+				}
 				_photosCache.Clear ();
-				photosListView.VirtualListSize = 0;
+				photosListView.VirtualListSize = _photos.Count;
 				photosImageList.Images.Clear ();
 				tabControl1.SelectedTab = photosTab;
 				backButton.Visible = true;
 				nextButton.Text = "Upload";
-				photosToAddCountLabel.Text = "0";
+				photosToAddCountLabel.Text = _photos.Count.ToString ();
 				albumPhotosCountLabel.Text = SelectedAlbum.Album.NumPhotos + "/"
 						       + SelectedAlbum.MaxPhotosCount;
 				addPhotosButton.Select ();
@@ -169,6 +184,8 @@ namespace PicasaUploader
 						}
                                         } while (retryCount != 0);
 				}
+
+				_sendToMode = false;
 
 				this.Invoke ((MethodInvoker)delegate {
 					albumPhotosCountLabel.Text = (SelectedAlbum.Album.NumPhotos + _photos.Count) + "/"
