@@ -17,7 +17,7 @@ namespace PicasaUploader
 {
 	class ImageSize
 	{
-		public static ImageSize Empty = new ImageSize ("Keep Size", 0, 0);
+		public static ImageSize Empty = new ImageSize ("Original Size", 0, 0);
 
 		public ImageSize (string label, int width, int height)
 		{
