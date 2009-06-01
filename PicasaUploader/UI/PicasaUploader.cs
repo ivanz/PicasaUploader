@@ -50,8 +50,7 @@ namespace PicasaUploader
 
 			// If sendToFiles has files of format which we support then we are in Send To mode.
 			if (sendToFiles != null && sendToFiles.Length > 0) {
-				_photos.AddRange (sendToFiles.Where (filePath => File.Exists (filePath) && 
-										PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (filePath))));
+				AddPhotos (sendToFiles);
 				if (_photos.Count > 0)
 					_sendToMode = true;
 			}
@@ -366,14 +365,21 @@ namespace PicasaUploader
 					return;
 				}
 
-				foreach (string fileName in openFileDialog.FileNames) {
-					if (!_photos.Contains (fileName))
-						_photos.Add (fileName);
-				}
-
-				photosListView.VirtualListSize = _photos.Count;
-				photosToAddCountLabel.Text = _photos.Count.ToString ();
+				AddPhotos (openFileDialog.FileNames);
 			}
+		}
+
+		private void AddPhotos (string[] files)
+		{
+			var supportedFiles = files.Where (filePath => File.Exists (filePath) && 
+							  PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (filePath)));
+			foreach (string fileName in files) {
+				if (!_photos.Contains (fileName))
+					_photos.Add (fileName);
+			}
+
+			photosListView.VirtualListSize = _photos.Count;
+			photosToAddCountLabel.Text = _photos.Count.ToString ();
 		}
 
 		private void removePhotosButton_Click(object sender, EventArgs e)
@@ -453,6 +459,20 @@ namespace PicasaUploader
 		private void aboutButton_Click (object sender, EventArgs e)
 		{
 			new AboutBox ().ShowDialog ();
+		}
+
+		private void photosListView_DragDrop (object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent (DataFormats.FileDrop)) {
+				string[] files = (string[]) e.Data.GetData (DataFormats.FileDrop);
+				AddPhotos (files);
+			}
+		}
+
+		private void photosListView_DragEnter (object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent (DataFormats.FileDrop))
+				e.Effect = DragDropEffects.Copy;
 		}
 	}
 }

@@ -301,6 +301,7 @@
 			// 
 			// photosListView
 			// 
+			this.photosListView.AllowDrop = true;
 			this.photosListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 				    | System.Windows.Forms.AnchorStyles.Left)
 				    | System.Windows.Forms.AnchorStyles.Right)));
@@ -312,7 +313,9 @@
 			this.photosListView.TabIndex = 18;
 			this.photosListView.UseCompatibleStateImageBehavior = false;
 			this.photosListView.VirtualMode = true;
+			this.photosListView.DragDrop += new System.Windows.Forms.DragEventHandler (this.photosListView_DragDrop);
 			this.photosListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler (this.photosListView_RetrieveVirtualItem);
+			this.photosListView.DragEnter += new System.Windows.Forms.DragEventHandler (this.photosListView_DragEnter);
 			// 
 			// photosImageList
 			// 
