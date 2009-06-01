@@ -35,6 +35,16 @@ namespace PicasaUploader
 
 		public static Image Scale (Image image, int newWidth, int newHeight, bool preserveAspect)
 		{
+			return Scale (image, newWidth, newHeight, preserveAspect, InterpolationMode.HighQualityBicubic);
+		}
+
+		public static Image ScaleToThumbnail (Image image, int newWidth, int newHeight, bool preserveAspect)
+		{
+			return Scale (image, newWidth, newHeight, preserveAspect, InterpolationMode.Low);
+		}
+
+		public static Image Scale (Image image, int newWidth, int newHeight, bool preserveAspect, InterpolationMode quality)
+		{
 			if (image == null)
 				throw new ArgumentNullException ("image", "image is null.");
 			if (newWidth <= 0)
@@ -51,7 +61,7 @@ namespace PicasaUploader
 
 			Bitmap newImage = new Bitmap ((int)newWidth, (int)newHeight);
 			Graphics gfx = Graphics.FromImage (newImage);
-			gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			gfx.InterpolationMode = quality;
 			gfx.DrawImage (image, 0, 0, newWidth, newHeight);
 			gfx.Dispose ();
 

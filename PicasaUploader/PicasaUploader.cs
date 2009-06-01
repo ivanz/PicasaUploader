@@ -391,7 +391,13 @@ namespace PicasaUploader
 				e.Item = _photosCache[fileName];
 			else {
 				string key = fileName;
-				photosImageList.Images.Add (fileName, Image.FromFile (fileName));
+
+				Image originalImage = Image.FromFile (fileName);
+				Image scaled = ImageScaler.ScaleToThumbnail (originalImage, photosImageList.ImageSize.Width, 
+									     photosImageList.ImageSize.Height, true);
+				photosImageList.Images.Add (fileName, scaled);
+				originalImage.Dispose ();
+
 				ListViewItem item = new ListViewItem (Path.GetFileName (fileName), 
 									photosImageList.Images.IndexOfKey (fileName));
 				item.Tag = key;
