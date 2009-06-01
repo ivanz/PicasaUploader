@@ -33,6 +33,7 @@
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog ();
 			this.tabControl1 = new System.Windows.Forms.TabControl ();
 			this.loginTab = new System.Windows.Forms.TabPage ();
+			this.rememberCheckBox = new System.Windows.Forms.CheckBox ();
 			this.label6 = new System.Windows.Forms.Label ();
 			this.label5 = new System.Windows.Forms.Label ();
 			this.passwordTextBox = new System.Windows.Forms.TextBox ();
@@ -49,6 +50,8 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel ();
 			this.photosListView = new System.Windows.Forms.ListView ();
 			this.photosImageList = new System.Windows.Forms.ImageList (this.components);
+			this.label4 = new System.Windows.Forms.Label ();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer ();
 			this.panel1 = new System.Windows.Forms.Panel ();
 			this.photosToAddCountLabel = new System.Windows.Forms.Label ();
 			this.label8 = new System.Windows.Forms.Label ();
@@ -56,7 +59,9 @@
 			this.photosLeftLabel = new System.Windows.Forms.Label ();
 			this.removePhotosButton = new System.Windows.Forms.Button ();
 			this.addPhotosButton = new System.Windows.Forms.Button ();
-			this.label4 = new System.Windows.Forms.Label ();
+			this.label2 = new System.Windows.Forms.Label ();
+			this.imageSizeComboBox = new System.Windows.Forms.ComboBox ();
+			this.imageSizeBindingSource = new System.Windows.Forms.BindingSource (this.components);
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel ();
 			this.listView1 = new System.Windows.Forms.ListView ();
 			this.panel2 = new System.Windows.Forms.Panel ();
@@ -70,7 +75,6 @@
 			this.aboutButton = new System.Windows.Forms.Button ();
 			this.nextButton = new System.Windows.Forms.Button ();
 			this.backButton = new System.Windows.Forms.Button ();
-			this.rememberCheckBox = new System.Windows.Forms.CheckBox ();
 			this.tabControl1.SuspendLayout ();
 			this.loginTab.SuspendLayout ();
 			this.albumsTab.SuspendLayout ();
@@ -78,7 +82,11 @@
 			this.panel3.SuspendLayout ();
 			this.photosTab.SuspendLayout ();
 			this.tableLayoutPanel1.SuspendLayout ();
+			this.splitContainer1.Panel1.SuspendLayout ();
+			this.splitContainer1.Panel2.SuspendLayout ();
+			this.splitContainer1.SuspendLayout ();
 			this.panel1.SuspendLayout ();
+			((System.ComponentModel.ISupportInitialize)(this.imageSizeBindingSource)).BeginInit ();
 			this.tableLayoutPanel2.SuspendLayout ();
 			this.panel2.SuspendLayout ();
 			this.SuspendLayout ();
@@ -97,13 +105,12 @@
 			this.tabControl1.Controls.Add (this.loginTab);
 			this.tabControl1.Controls.Add (this.albumsTab);
 			this.tabControl1.Controls.Add (this.photosTab);
-			this.tabControl1.HotTrack = true;
 			this.tabControl1.ItemSize = new System.Drawing.Size (0, 1);
 			this.tabControl1.Location = new System.Drawing.Point (0, 0);
 			this.tabControl1.Multiline = true;
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size (517, 278);
+			this.tabControl1.Size = new System.Drawing.Size (517, 333);
 			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 9;
 			// 
@@ -118,16 +125,27 @@
 			this.loginTab.Location = new System.Drawing.Point (4, 5);
 			this.loginTab.Name = "loginTab";
 			this.loginTab.Padding = new System.Windows.Forms.Padding (3);
-			this.loginTab.Size = new System.Drawing.Size (509, 269);
+			this.loginTab.Size = new System.Drawing.Size (509, 324);
 			this.loginTab.TabIndex = 0;
 			this.loginTab.Text = "Login";
 			this.loginTab.UseVisualStyleBackColor = true;
+			// 
+			// rememberCheckBox
+			// 
+			this.rememberCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.rememberCheckBox.AutoSize = true;
+			this.rememberCheckBox.Location = new System.Drawing.Point (229, 180);
+			this.rememberCheckBox.Name = "rememberCheckBox";
+			this.rememberCheckBox.Size = new System.Drawing.Size (156, 17);
+			this.rememberCheckBox.TabIndex = 3;
+			this.rememberCheckBox.Text = "Remember login information";
+			this.rememberCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// label6
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point (126, 129);
+			this.label6.Location = new System.Drawing.Point (126, 157);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size (56, 13);
 			this.label6.TabIndex = 19;
@@ -137,7 +155,7 @@
 			// 
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point (124, 103);
+			this.label5.Location = new System.Drawing.Point (124, 131);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size (58, 13);
 			this.label5.TabIndex = 18;
@@ -146,7 +164,7 @@
 			// passwordTextBox
 			// 
 			this.passwordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.passwordTextBox.Location = new System.Drawing.Point (188, 126);
+			this.passwordTextBox.Location = new System.Drawing.Point (188, 154);
 			this.passwordTextBox.Name = "passwordTextBox";
 			this.passwordTextBox.Size = new System.Drawing.Size (197, 20);
 			this.passwordTextBox.TabIndex = 2;
@@ -156,7 +174,7 @@
 			// usernameTextBox
 			// 
 			this.usernameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.usernameTextBox.Location = new System.Drawing.Point (188, 100);
+			this.usernameTextBox.Location = new System.Drawing.Point (188, 128);
 			this.usernameTextBox.Name = "usernameTextBox";
 			this.usernameTextBox.Size = new System.Drawing.Size (197, 20);
 			this.usernameTextBox.TabIndex = 1;
@@ -177,7 +195,7 @@
 			this.albumsTab.Location = new System.Drawing.Point (4, 5);
 			this.albumsTab.Name = "albumsTab";
 			this.albumsTab.Padding = new System.Windows.Forms.Padding (3);
-			this.albumsTab.Size = new System.Drawing.Size (509, 269);
+			this.albumsTab.Size = new System.Drawing.Size (509, 324);
 			this.albumsTab.TabIndex = 1;
 			this.albumsTab.Text = "Select Album";
 			this.albumsTab.UseVisualStyleBackColor = true;
@@ -197,7 +215,7 @@
 			this.tableLayoutPanel3.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 18F));
 			this.tableLayoutPanel3.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel3.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 34F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size (503, 263);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size (503, 318);
 			this.tableLayoutPanel3.TabIndex = 20;
 			// 
 			// albumsListView
@@ -209,7 +227,7 @@
 			this.albumsListView.LargeImageList = this.albumCoversImageList;
 			this.albumsListView.Location = new System.Drawing.Point (3, 21);
 			this.albumsListView.Name = "albumsListView";
-			this.albumsListView.Size = new System.Drawing.Size (498, 205);
+			this.albumsListView.Size = new System.Drawing.Size (498, 260);
 			this.albumsListView.TabIndex = 18;
 			this.albumsListView.UseCompatibleStateImageBehavior = false;
 			// 
@@ -223,7 +241,7 @@
 			// 
 			this.panel3.Controls.Add (this.newAlbumButton);
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel3.Location = new System.Drawing.Point (3, 232);
+			this.panel3.Location = new System.Drawing.Point (3, 287);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size (498, 28);
 			this.panel3.TabIndex = 17;
@@ -258,7 +276,7 @@
 			this.photosTab.Location = new System.Drawing.Point (4, 5);
 			this.photosTab.Name = "photosTab";
 			this.photosTab.Padding = new System.Windows.Forms.Padding (3);
-			this.photosTab.Size = new System.Drawing.Size (509, 269);
+			this.photosTab.Size = new System.Drawing.Size (509, 324);
 			this.photosTab.TabIndex = 2;
 			this.photosTab.Text = "Add Photos";
 			this.photosTab.UseVisualStyleBackColor = true;
@@ -269,16 +287,16 @@
 			this.tableLayoutPanel1.ColumnCount = 1;
 			this.tableLayoutPanel1.ColumnStyles.Add (new System.Windows.Forms.ColumnStyle ());
 			this.tableLayoutPanel1.Controls.Add (this.photosListView, 0, 1);
-			this.tableLayoutPanel1.Controls.Add (this.panel1, 0, 2);
 			this.tableLayoutPanel1.Controls.Add (this.label4, 0, 0);
+			this.tableLayoutPanel1.Controls.Add (this.splitContainer1, 0, 2);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point (3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 3;
 			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 18F));
 			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 34F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size (503, 263);
+			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 64F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size (503, 318);
 			this.tableLayoutPanel1.TabIndex = 19;
 			// 
 			// photosListView
@@ -290,7 +308,7 @@
 			this.photosListView.LargeImageList = this.photosImageList;
 			this.photosListView.Location = new System.Drawing.Point (3, 21);
 			this.photosListView.Name = "photosListView";
-			this.photosListView.Size = new System.Drawing.Size (498, 205);
+			this.photosListView.Size = new System.Drawing.Size (498, 230);
 			this.photosListView.TabIndex = 18;
 			this.photosListView.UseCompatibleStateImageBehavior = false;
 			this.photosListView.VirtualMode = true;
@@ -302,6 +320,36 @@
 			this.photosImageList.ImageSize = new System.Drawing.Size (64, 64);
 			this.photosImageList.TransparentColor = System.Drawing.Color.Transparent;
 			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point (3, 0);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size (181, 16);
+			this.label4.TabIndex = 13;
+			this.label4.Text = "Step 3: Select the Photos";
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.Location = new System.Drawing.Point (3, 257);
+			this.splitContainer1.Name = "splitContainer1";
+			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add (this.panel1);
+			this.splitContainer1.Panel1MinSize = 29;
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add (this.label2);
+			this.splitContainer1.Panel2.Controls.Add (this.imageSizeComboBox);
+			this.splitContainer1.Size = new System.Drawing.Size (498, 58);
+			this.splitContainer1.SplitterDistance = 29;
+			this.splitContainer1.TabIndex = 19;
+			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add (this.photosToAddCountLabel);
@@ -311,10 +359,10 @@
 			this.panel1.Controls.Add (this.removePhotosButton);
 			this.panel1.Controls.Add (this.addPhotosButton);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point (3, 232);
+			this.panel1.Location = new System.Drawing.Point (0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size (498, 28);
-			this.panel1.TabIndex = 17;
+			this.panel1.Size = new System.Drawing.Size (498, 29);
+			this.panel1.TabIndex = 18;
 			// 
 			// photosToAddCountLabel
 			// 
@@ -365,7 +413,7 @@
 			this.removePhotosButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.removePhotosButton.Image = ((System.Drawing.Image)(resources.GetObject ("removePhotosButton.Image")));
 			this.removePhotosButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.removePhotosButton.Location = new System.Drawing.Point (3, 2);
+			this.removePhotosButton.Location = new System.Drawing.Point (3, 3);
 			this.removePhotosButton.Name = "removePhotosButton";
 			this.removePhotosButton.Size = new System.Drawing.Size (117, 23);
 			this.removePhotosButton.TabIndex = 20;
@@ -379,7 +427,7 @@
 			this.addPhotosButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.addPhotosButton.Image = ((System.Drawing.Image)(resources.GetObject ("addPhotosButton.Image")));
 			this.addPhotosButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.addPhotosButton.Location = new System.Drawing.Point (411, 2);
+			this.addPhotosButton.Location = new System.Drawing.Point (411, 3);
 			this.addPhotosButton.Name = "addPhotosButton";
 			this.addPhotosButton.Size = new System.Drawing.Size (84, 23);
 			this.addPhotosButton.TabIndex = 19;
@@ -388,15 +436,30 @@
 			this.addPhotosButton.UseVisualStyleBackColor = true;
 			this.addPhotosButton.Click += new System.EventHandler (this.addPhotosButton_Click);
 			// 
-			// label4
+			// label2
 			// 
-			this.label4.AutoSize = true;
-			this.label4.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point (3, 0);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size (181, 16);
-			this.label4.TabIndex = 13;
-			this.label4.Text = "Step 3: Select the Photos";
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point (165, 5);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size (174, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Resize down to (aspect preserved):";
+			// 
+			// imageSizeComboBox
+			// 
+			this.imageSizeComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.imageSizeComboBox.DataSource = this.imageSizeBindingSource;
+			this.imageSizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.imageSizeComboBox.FormattingEnabled = true;
+			this.imageSizeComboBox.Location = new System.Drawing.Point (345, 2);
+			this.imageSizeComboBox.Name = "imageSizeComboBox";
+			this.imageSizeComboBox.Size = new System.Drawing.Size (150, 21);
+			this.imageSizeComboBox.TabIndex = 0;
+			// 
+			// imageSizeBindingSource
+			// 
+			this.imageSizeBindingSource.DataSource = typeof (PicasaUploader.ImageSize);
 			// 
 			// tableLayoutPanel2
 			// 
@@ -486,7 +549,7 @@
 			// 
 			this.actionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.actionLabel.AutoSize = true;
-			this.actionLabel.Location = new System.Drawing.Point (39, 291);
+			this.actionLabel.Location = new System.Drawing.Point (39, 346);
 			this.actionLabel.Name = "actionLabel";
 			this.actionLabel.Size = new System.Drawing.Size (38, 13);
 			this.actionLabel.TabIndex = 24;
@@ -495,7 +558,7 @@
 			// progressBar
 			// 
 			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.progressBar.Location = new System.Drawing.Point (147, 286);
+			this.progressBar.Location = new System.Drawing.Point (147, 341);
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size (177, 23);
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -505,7 +568,7 @@
 			// 
 			this.aboutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.aboutButton.Image = ((System.Drawing.Image)(resources.GetObject ("aboutButton.Image")));
-			this.aboutButton.Location = new System.Drawing.Point (12, 286);
+			this.aboutButton.Location = new System.Drawing.Point (12, 341);
 			this.aboutButton.Name = "aboutButton";
 			this.aboutButton.Size = new System.Drawing.Size (21, 23);
 			this.aboutButton.TabIndex = 25;
@@ -517,7 +580,7 @@
 			this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.nextButton.Image = ((System.Drawing.Image)(resources.GetObject ("nextButton.Image")));
 			this.nextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.nextButton.Location = new System.Drawing.Point (421, 286);
+			this.nextButton.Location = new System.Drawing.Point (421, 341);
 			this.nextButton.Name = "nextButton";
 			this.nextButton.Size = new System.Drawing.Size (84, 23);
 			this.nextButton.TabIndex = 4;
@@ -530,7 +593,7 @@
 			this.backButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.backButton.Image = ((System.Drawing.Image)(resources.GetObject ("backButton.Image")));
 			this.backButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.backButton.Location = new System.Drawing.Point (330, 286);
+			this.backButton.Location = new System.Drawing.Point (330, 341);
 			this.backButton.Name = "backButton";
 			this.backButton.Size = new System.Drawing.Size (84, 23);
 			this.backButton.TabIndex = 5;
@@ -539,22 +602,11 @@
 			this.backButton.Visible = false;
 			this.backButton.Click += new System.EventHandler (this.backButton_Click);
 			// 
-			// rememberCheckBox
-			// 
-			this.rememberCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-			this.rememberCheckBox.AutoSize = true;
-			this.rememberCheckBox.Location = new System.Drawing.Point (229, 152);
-			this.rememberCheckBox.Name = "rememberCheckBox";
-			this.rememberCheckBox.Size = new System.Drawing.Size (156, 17);
-			this.rememberCheckBox.TabIndex = 3;
-			this.rememberCheckBox.Text = "Remember login information";
-			this.rememberCheckBox.UseVisualStyleBackColor = true;
-			// 
 			// PicasaUploaderForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF (6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size (517, 318);
+			this.ClientSize = new System.Drawing.Size (517, 373);
 			this.Controls.Add (this.aboutButton);
 			this.Controls.Add (this.actionLabel);
 			this.Controls.Add (this.progressBar);
@@ -562,7 +614,7 @@
 			this.Controls.Add (this.backButton);
 			this.Controls.Add (this.tabControl1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject ("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size (525, 345);
+			this.MinimumSize = new System.Drawing.Size (525, 400);
 			this.Name = "PicasaUploaderForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "PicasaUploader";
@@ -578,8 +630,13 @@
 			this.photosTab.PerformLayout ();
 			this.tableLayoutPanel1.ResumeLayout (false);
 			this.tableLayoutPanel1.PerformLayout ();
+			this.splitContainer1.Panel1.ResumeLayout (false);
+			this.splitContainer1.Panel2.ResumeLayout (false);
+			this.splitContainer1.Panel2.PerformLayout ();
+			this.splitContainer1.ResumeLayout (false);
 			this.panel1.ResumeLayout (false);
 			this.panel1.PerformLayout ();
+			((System.ComponentModel.ISupportInitialize)(this.imageSizeBindingSource)).EndInit ();
 			this.tableLayoutPanel2.ResumeLayout (false);
 			this.tableLayoutPanel2.PerformLayout ();
 			this.panel2.ResumeLayout (false);
@@ -607,9 +664,6 @@
 		private System.Windows.Forms.TextBox passwordTextBox;
 		private System.Windows.Forms.TextBox usernameTextBox;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Button removePhotosButton;
-		private System.Windows.Forms.Button addPhotosButton;
 		private System.Windows.Forms.ListView photosListView;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 		private System.Windows.Forms.ListView albumsListView;
@@ -626,12 +680,19 @@
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label actionLabel;
 		private System.Windows.Forms.ProgressBar progressBar;
-		private System.Windows.Forms.Label photosLeftLabel;
-		private System.Windows.Forms.Label albumPhotosCountLabel;
-		private System.Windows.Forms.Label photosToAddCountLabel;
-		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Button aboutButton;
 		private System.Windows.Forms.CheckBox rememberCheckBox;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.Label photosToAddCountLabel;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label albumPhotosCountLabel;
+		private System.Windows.Forms.Label photosLeftLabel;
+		private System.Windows.Forms.Button removePhotosButton;
+		private System.Windows.Forms.Button addPhotosButton;
+		private System.Windows.Forms.ComboBox imageSizeComboBox;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.BindingSource imageSizeBindingSource;
 	}
 }
 

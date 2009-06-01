@@ -33,10 +33,14 @@ namespace PicasaUploader
 		private Dictionary<string, ListViewItem> _photosCache;
 		private AlbumInfo _selectedAlbum = null;
 		private bool _sendToMode = true;
+		private DuplicateActionDialog _duplicateActionDialog = null;
 
 		public PicasaUploaderForm (string[] sendToFiles)
 		{
 			InitializeComponent ();
+
+			LoadImageSizes ();
+
 			_picasa = new PicasaController ();
 			_photosCache = new Dictionary<string, ListViewItem> ();
 			_photos = new List<string> ();
@@ -57,6 +61,16 @@ namespace PicasaUploader
 		{
 		}
 
+		private void LoadImageSizes ()
+		{
+			imageSizeBindingSource.DataSource = new List<ImageSize> () {
+				ImageSize.Empty,
+				new ImageSize ("Small", 800, 600),
+				new ImageSize ("Medium", 1024, 768),
+				new ImageSize ("Large", 1280, 1024),
+				new ImageSize ("Extra Large", 1400, 1050)
+			};
+		}
 
 		private void LoadUserCredentials ()
 		{
@@ -91,7 +105,7 @@ namespace PicasaUploader
 		}
 
 
-		private void SetFileDialogFilter ()
+		private void SetFileDialogImagesFilter ()
 		{
 			StringBuilder sb = new StringBuilder ("Pictures|");
 			foreach (string extension in PicasaController.SupportedPhotoFormats) {
@@ -149,6 +163,7 @@ namespace PicasaUploader
 			// Set lables/button textx
 			nextButton.Enabled = backButton.Enabled = false;
 			addPhotosButton.Enabled = removePhotosButton.Enabled = false;
+			imageSizeComboBox.Enabled = false;
 			progressBar.Step = 1;
 			progressBar.Maximum = _photos.Count;
 			actionLabel.Text = "Uploading 1/" + _photos.Count;
@@ -156,7 +171,6 @@ namespace PicasaUploader
 			AlbumInfo album = (AlbumInfo)albumsListView.SelectedItems[0].Tag;
 
 			ThreadPool.QueueUserWorkItem (delegate {
-				DuplicateActionDialog duplicateActionDialog = null;
 				for (int i = 0; i < _photos.Count; i++) {
 					this.Invoke ((MethodInvoker)delegate {
 						progressBar.PerformStep ();
@@ -166,36 +180,7 @@ namespace PicasaUploader
 					int retryCount = DEFAULT_UPLOAD_RETRY_COUNT;
 					do {
 						try {
-							// Handle duplicate photos
-							if (SelectedAlbum.IsPhotoDupliate (_photos[i])) {
-								if (duplicateActionDialog == null)
-									duplicateActionDialog = new DuplicateActionDialog ();
-								if (duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
-									SelectedAlbum.ReplacePhoto (_photos[i]);
-								else if (duplicateActionDialog.Action == DuplicateAction.UploadAll)
-									SelectedAlbum.UploadPhoto (_photos[i]);
-								else if (duplicateActionDialog.Action == DuplicateAction.SkipAll) {
-									// do nothing;
-								} else {
-									this.Invoke ((MethodInvoker)delegate {
-										duplicateActionDialog.ShowDialog (this, Path.GetFileName (_photos[i]),
-														  SelectedAlbum.Album.AlbumTitle);
-									});
-
-									if (duplicateActionDialog.Action == DuplicateAction.Replace ||
-									    duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
-										SelectedAlbum.ReplacePhoto (_photos[i]);
-									else if (duplicateActionDialog.Action == DuplicateAction.Upload || 
-										 duplicateActionDialog.Action == DuplicateAction.UploadAll)
-										SelectedAlbum.UploadPhoto (_photos[i]);
-									else if (duplicateActionDialog.Action == DuplicateAction.Skip ||
-										 duplicateActionDialog.Action == DuplicateAction.SkipAll) {
-										// do nothing;
-									} 
-								}
-							} else {
-								SelectedAlbum.UploadPhoto (_photos[i]);
-							}
+							DoUpload (_photos[i]);
 							retryCount = 0;
 						} catch {
 							retryCount--;
@@ -232,6 +217,7 @@ namespace PicasaUploader
 				this.Invoke ((MethodInvoker)delegate {
 					nextButton.Enabled = backButton.Enabled = true;
 					addPhotosButton.Enabled = removePhotosButton.Enabled = true;
+					imageSizeComboBox.Enabled = true;
 					actionLabel.Text = READY_LABEL;
 					progressBar.Value = 0;
 					// Upload more photos?
@@ -242,6 +228,65 @@ namespace PicasaUploader
 						Application.Exit ();
 				});
 			});
+		}
+
+		private void DoUpload (string file)
+		{
+			Stream image = ScaleImageDown (file);
+			string title = Path.GetFileName (file);
+			string mimeType = PicasaController.GetMimeType (file);
+
+			// Handle duplicate photos
+			if (SelectedAlbum.IsPhotoDupliate (file)) {
+				if (_duplicateActionDialog == null)
+					_duplicateActionDialog = new DuplicateActionDialog ();
+
+				if (_duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
+					SelectedAlbum.ReplacePhoto (image, title, mimeType);
+				else if (_duplicateActionDialog.Action == DuplicateAction.UploadAll)
+					SelectedAlbum.UploadPhoto (image, title, mimeType);
+				else if (_duplicateActionDialog.Action == DuplicateAction.SkipAll) {
+					// do nothing;
+				} else {
+					this.Invoke ((MethodInvoker)delegate {
+						_duplicateActionDialog.ShowDialog (this, title,
+										   SelectedAlbum.Album.AlbumTitle);
+					});
+
+					if (_duplicateActionDialog.Action == DuplicateAction.Replace ||
+					    _duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
+						SelectedAlbum.ReplacePhoto (image, title, mimeType);
+					else if (_duplicateActionDialog.Action == DuplicateAction.Upload ||
+						 _duplicateActionDialog.Action == DuplicateAction.UploadAll)
+						SelectedAlbum.UploadPhoto (image, title, mimeType);
+					else if (_duplicateActionDialog.Action == DuplicateAction.Skip ||
+						 _duplicateActionDialog.Action == DuplicateAction.SkipAll) {
+						// do nothing;
+					}
+				}
+			} else {
+				SelectedAlbum.UploadPhoto (image, title, mimeType);
+			}
+		}
+
+		private Stream ScaleImageDown (string file)
+		{
+			Image image = Image.FromFile (file);
+			Stream imageFile = File.OpenRead (file);
+
+			ImageSize selectedSize = imageSizeBindingSource.Current as ImageSize;
+			if (selectedSize != null && selectedSize != ImageSize.Empty &&
+			    (image.Height > selectedSize.Height || image.Width > selectedSize.Width)) {
+				Stream newImage = ImageScaler.Scale (imageFile, selectedSize.Width, 
+								     selectedSize.Height, true);
+				imageFile.Dispose ();
+				image.Dispose ();
+				
+				return newImage;
+			}
+
+			image.Dispose ();
+			return imageFile;
 		}
 
 		private void LoadAlbums ()

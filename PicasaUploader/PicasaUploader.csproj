@@ -72,6 +72,8 @@
     <Compile Include="DuplicateActionDialog.Designer.cs">
       <DependentUpon>DuplicateActionDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageScaler.cs" />
+    <Compile Include="ImageSize.cs" />
     <Compile Include="MonoRuntimeDetect.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -154,6 +156,7 @@
     <None Include="PicasaUploader.sh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\DataSources\ImageSize.datasource" />
     <None Include="Resources\list-remove.png" />
   </ItemGroup>
   <ItemGroup>

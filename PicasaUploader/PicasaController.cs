@@ -141,8 +141,8 @@ namespace PicasaUploader
 			get { return _accessor.NumPhotos + _accessor.NumPhotosRemaining; }
 		}
 
-		// Only checks if there is a photo with the same title. 
-		// Doesn't necessarily mean that it is a duplicate.
+		// Only checks if there is a photo with the same title and 
+		// does *not* check if the content matches.
 		//
 		public bool IsPhotoDupliate (string fileName)
 		{
@@ -179,8 +179,22 @@ namespace PicasaUploader
 			if (mimeType == null) // not supported
 				throw new NotSupportedException ("Image type not supported");
 
+			using (Stream file = File.OpenRead (fileName)) {
+				UploadPhoto (file, fileName, PicasaController.GetMimeType (fileName));
+			}
+		}
+
+		public void UploadPhoto (Stream file, string title, string mimeType)
+		{
+			if (String.IsNullOrEmpty (mimeType))
+				throw new ArgumentException ("mimeType is null or empty.", "mimeType");
+			if (String.IsNullOrEmpty (title))
+				throw new ArgumentException ("title is null or empty.", "title");
+			if (file == null)
+				throw new ArgumentNullException ("file", "file is null.");
+			
 			_picasaService.Insert (new Uri (PhotoQuery.CreatePicasaUri (_picasaService.Credentials.Username, _accessor.Id)),
-						File.OpenRead (fileName), PicasaController.GetMimeType (fileName), fileName);
+					       file, mimeType, title);
 		}
 
 		public void ReplacePhoto (string fileName)
@@ -192,6 +206,22 @@ namespace PicasaUploader
 			if (photo != null) {
 				_picasaService.Delete (photo);
 				UploadPhoto (fileName);
+			}
+		}
+
+		public void ReplacePhoto (Stream file, string title, string mimeType)
+		{
+			if (file == null)
+				throw new ArgumentNullException ("file", "file is null.");
+			if (String.IsNullOrEmpty (title))
+				throw new ArgumentException ("title is null or empty.", "title");
+			if (String.IsNullOrEmpty (mimeType))
+				throw new ArgumentException ("mimeType is null or empty.", "mimeType");
+
+			PicasaEntry photo = FindPhotoByTitle (title);
+			if (photo != null) {
+				_picasaService.Delete (photo);
+				UploadPhoto (file, title, mimeType);
 			}
 		}
 	}
