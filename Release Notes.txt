@@ -1,0 +1,18 @@
+[2009.12.16] PicasaUploader 0.4
+
+   - Use system's proxy settings.
+
+
+[2009.06.01] PicasaUploader 0.3
+
+   – Batch image high quality scaling/resizing and big memory usage improvements.
+
+
+[2009.05.15] PicasaUploader 0.2
+
+   – “Send To” integration on Windows and username/password saving.
+   
+
+[2009.04.30] PicasaUploader 0.1
+
+   – Initial release.
