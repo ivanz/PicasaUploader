@@ -1,8 +1,8 @@
 //
-// Copyright (c) 2009 Ivan N. Zlatev <contact@i-nz.net>
+// Copyright (c) 2009 Ivan Zlatev <ivan@ivanz.com>
 //
 // Authors:
-//	Ivan N. Zlatev <contact@i-nz.net>
+//	Ivan Zlatev <ivan@ivanz.com>
 //
 // License: MIT/X11 - See LICENSE.txt
 //

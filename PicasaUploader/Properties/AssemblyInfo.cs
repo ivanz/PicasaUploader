@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PicasaUploader")]
-[assembly: AssemblyCopyright("Copyright © Ivan N. Zlatev 2009")]
+[assembly: AssemblyCopyright("Copyright © Ivan Zlatev 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
