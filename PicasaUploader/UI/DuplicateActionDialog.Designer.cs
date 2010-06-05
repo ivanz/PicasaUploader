@@ -110,10 +110,10 @@
 			this.textLabel.AutoSize = true;
 			this.textLabel.Location = new System.Drawing.Point (12, 9);
 			this.textLabel.Name = "textLabel";
-			this.textLabel.Size = new System.Drawing.Size (416, 65);
+			this.textLabel.Size = new System.Drawing.Size (413, 65);
 			this.textLabel.TabIndex = 6;
-			this.textLabel.Text = "A photo titled {0} is already present in album {1}.\r\n\r\nWhat would you like to do?" +
-			    "\r\n\r\nNote: Photos in Picasa are not stored by title and the two photos might not " +
+			this.textLabel.Text = "A file titled {0} is already present in album {1}.\r\n\r\nWhat would you like to do?\r" +
+			    "\n\r\nNote: Files in PicasaWeb are not stored by title and the two files might not " +
 			    "be identical.";
 			// 
 			// DuplicateActionDialog

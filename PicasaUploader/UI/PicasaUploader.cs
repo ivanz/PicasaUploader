@@ -29,8 +29,8 @@ namespace PicasaUploader
 		private static string READY_LABEL = "Ready";
 		private static int DEFAULT_UPLOAD_RETRY_COUNT = 3;
 		PicasaController _picasa;
-		private List<string> _photos;
-		private Dictionary<string, ListViewItem> _photosCache;
+		private List<string> _files;
+		private Dictionary<string, ListViewItem> _filesListViewItemsCache;
 		private AlbumInfo _selectedAlbum = null;
 		private bool _sendToMode = true;
 		private DuplicateActionDialog _duplicateActionDialog = null;
@@ -42,16 +42,16 @@ namespace PicasaUploader
 			LoadImageSizes ();
 
 			_picasa = new PicasaController ();
-			_photosCache = new Dictionary<string, ListViewItem> ();
-			_photos = new List<string> ();
+			_filesListViewItemsCache = new Dictionary<string, ListViewItem> ();
+			_files = new List<string> ();
 			usernameTextBox.Select ();
 			LoadUserCredentials ();
 			openFileDialog.InitialDirectory = Environment.GetFolderPath (Environment.SpecialFolder.MyPictures);
 
 			// If sendToFiles has files of format which we support then we are in Send To mode.
 			if (sendToFiles != null && sendToFiles.Length > 0) {
-				AddPhotos (sendToFiles);
-				if (_photos.Count > 0)
+				AddFiles (sendToFiles);
+				if (_files.Count > 0)
 					_sendToMode = true;
 			}
 		}
@@ -126,7 +126,7 @@ namespace PicasaUploader
 			else if (tabControl1.SelectedTab == albumsTab)
 				PreparePhotosTab ();
 			else if (tabControl1.SelectedTab == photosTab)
-				UploadPhotos ();
+				UploadFiles ();
 		}
 
 		private void PreparePhotosTab ()
@@ -137,18 +137,18 @@ namespace PicasaUploader
 			} else {
 				_selectedAlbum = (AlbumInfo)albumsListView.SelectedItems[0].Tag;
 				if (!_sendToMode) {
-					_photos.Clear ();
+					_files.Clear ();
 				}
-				_photosCache.Clear ();
-				photosListView.VirtualListSize = _photos.Count;
+				_filesListViewItemsCache.Clear ();
+				filesListView.VirtualListSize = _files.Count;
 				photosImageList.Images.Clear ();
 				tabControl1.SelectedTab = photosTab;
-				backButton.Visible = true;
+				backButton.Enabled = true;
 				nextButton.Text = "Upload";
-				photosToAddCountLabel.Text = _photos.Count.ToString ();
+				filesToAddCountLabel.Text = _files.Count.ToString ();
 				albumPhotosCountLabel.Text = SelectedAlbum.Album.NumPhotos + "/"
-						       + SelectedAlbum.MaxPhotosCount;
-				addPhotosButton.Select ();
+						       + PicasaController.AlbumFilesCountLimit;
+				addFilesButton.Select ();
 			}
 		}
 
@@ -157,40 +157,41 @@ namespace PicasaUploader
 			get { return _selectedAlbum; }
 		}
 
-		private void UploadPhotos ()
+		private void UploadFiles ()
 		{
-			// Set lables/button textx
+			// Set lables/button text
 			nextButton.Enabled = backButton.Enabled = false;
-			addPhotosButton.Enabled = removePhotosButton.Enabled = false;
+			addFilesButton.Enabled = removePhotosButton.Enabled = false;
 			imageSizeComboBox.Enabled = false;
 			progressBar.Step = 1;
-			progressBar.Maximum = _photos.Count;
-			actionLabel.Text = "Uploading 1/" + _photos.Count;
+			progressBar.Maximum = _files.Count;
+			actionLabel.Text = "Preparing upload";
 
 			AlbumInfo album = (AlbumInfo)albumsListView.SelectedItems[0].Tag;
 
 			ThreadPool.QueueUserWorkItem (delegate {
-				for (int i = 0; i < _photos.Count; i++) {
+				for (int i = 0; i < _files.Count; i++) {
 					this.Invoke ((MethodInvoker)delegate {
 						progressBar.PerformStep ();
-						actionLabel.Text = "Uploading " + (i+1) + "/" + _photos.Count;
+						actionLabel.Text = String.Format("Uploading {0}/{1}", (i+1), _files.Count);
 					});
 
 					int retryCount = DEFAULT_UPLOAD_RETRY_COUNT;
 					do {
 						try {
-							DoUpload (_photos[i]);
+							DoUpload (_files[i]);
 							retryCount = 0;
 						} catch {
 							retryCount--;
 							if (retryCount == 0) {
 								// Retry?
-								bool retry = MessageBox.Show ("There is a problem uploading: " + Path.GetFileName (_photos[i]) +
-									Environment.NewLine + "Possible reasons are: " + Environment.NewLine +
-									"\t - No available Internet connection or temporary Picasas service interruption." + Environment.NewLine +
+								bool retry = MessageBox.Show ("There is a problem uploading " + Path.GetFileName (_files[i]) +
+									Environment.NewLine + "Some possible causes can be: " + Environment.NewLine +
+									"\t - PicasaWeb rejected the file." + Environment.NewLine + 
+									"\t - Temporary Internet connection issues." + Environment.NewLine + 
+									"\t - Temporary PicasaWeb service disruption." + Environment.NewLine +
 									"\t - You have exceeded your PicasaWeb Quota." + Environment.NewLine +
-									"\t - You have exceeded the photo count per album." + Environment.NewLine +
-									"\t - No read access to the photo file." + Environment.NewLine +
+									"\t - No read access to the file." + Environment.NewLine +
 									Environment.NewLine +
 									"Would you like to retry?", "Upload Error", MessageBoxButtons.YesNo,
 									MessageBoxIcon.Error) == DialogResult.Yes;
@@ -208,14 +209,14 @@ namespace PicasaUploader
 				_sendToMode = false;
 
 				this.Invoke ((MethodInvoker)delegate {
-					albumPhotosCountLabel.Text = (SelectedAlbum.Album.NumPhotos + _photos.Count) + "/"
-							       + SelectedAlbum.MaxPhotosCount;
+					albumPhotosCountLabel.Text = (SelectedAlbum.Album.NumPhotos + _files.Count) + "/"
+							       + PicasaController.AlbumFilesCountLimit;
 				});
 
 				// Set labels/buttons back to normal
 				this.Invoke ((MethodInvoker)delegate {
 					nextButton.Enabled = backButton.Enabled = true;
-					addPhotosButton.Enabled = removePhotosButton.Enabled = true;
+					addFilesButton.Enabled = removePhotosButton.Enabled = true;
 					imageSizeComboBox.Enabled = true;
 					actionLabel.Text = READY_LABEL;
 					progressBar.Value = 0;
@@ -229,42 +230,62 @@ namespace PicasaUploader
 			});
 		}
 
-		private void DoUpload (string file)
+		private bool IsPhotoFile (string fileName)
 		{
-			Stream image = ScaleImageDown (file);
-			string title = Path.GetFileName (file);
-			string mimeType = PicasaController.GetMimeType (file);
+			return PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (fileName));
+		}
 
-			// Handle duplicate photos
-			if (SelectedAlbum.IsPhotoDupliate (file)) {
-				if (_duplicateActionDialog == null)
-					_duplicateActionDialog = new DuplicateActionDialog ();
+		private bool IsVideoFile (string fileName)
+		{
+			return PicasaController.SupportedVideoFormats.Contains (Path.GetExtension (fileName));
+		}
 
-				if (_duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
-					SelectedAlbum.ReplacePhoto (image, title, mimeType);
-				else if (_duplicateActionDialog.Action == DuplicateAction.UploadAll)
-					SelectedAlbum.UploadPhoto (image, title, mimeType);
-				else if (_duplicateActionDialog.Action == DuplicateAction.SkipAll) {
-					// do nothing;
-				} else {
-					this.Invoke ((MethodInvoker)delegate {
-						_duplicateActionDialog.ShowDialog (this, title,
-										   SelectedAlbum.Album.AlbumTitle);
-					});
+		private void DoUpload (string fileName)
+		{
+			Stream fileStream = null;
 
-					if (_duplicateActionDialog.Action == DuplicateAction.Replace ||
-					    _duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
-						SelectedAlbum.ReplacePhoto (image, title, mimeType);
-					else if (_duplicateActionDialog.Action == DuplicateAction.Upload ||
-						 _duplicateActionDialog.Action == DuplicateAction.UploadAll)
-						SelectedAlbum.UploadPhoto (image, title, mimeType);
-					else if (_duplicateActionDialog.Action == DuplicateAction.Skip ||
-						 _duplicateActionDialog.Action == DuplicateAction.SkipAll) {
-						// do nothing;
+			if (IsPhotoFile (fileName))
+				fileStream = ScaleImageDown (fileName);
+			else
+				fileStream = File.Open (fileName, FileMode.Open);
+
+			try {
+				string title = Path.GetFileName (fileName);
+				string mimeType = PicasaController.GetMimeType (fileName);
+
+				// Handle duplicate files
+				if (SelectedAlbum.IsFileDuplicate (fileName)) {
+					if (_duplicateActionDialog == null)
+						_duplicateActionDialog = new DuplicateActionDialog ();
+
+					if (_duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
+						SelectedAlbum.ReplaceFile (fileStream, title, mimeType);
+					else if (_duplicateActionDialog.Action == DuplicateAction.UploadAll)
+						SelectedAlbum.UploadFile (fileStream, title, mimeType);
+					else if (_duplicateActionDialog.Action == DuplicateAction.SkipAll) {
+						// do nothing - skip;
+					} else {
+						this.Invoke ((MethodInvoker)delegate {
+							_duplicateActionDialog.ShowDialog (this, title,
+											   SelectedAlbum.Album.AlbumTitle);
+						});
+
+						if (_duplicateActionDialog.Action == DuplicateAction.Replace ||
+						    _duplicateActionDialog.Action == DuplicateAction.ReplaceAll)
+							SelectedAlbum.ReplaceFile (fileStream, title, mimeType);
+						else if (_duplicateActionDialog.Action == DuplicateAction.Upload ||
+							 _duplicateActionDialog.Action == DuplicateAction.UploadAll)
+							SelectedAlbum.UploadFile (fileStream, title, mimeType);
+						else if (_duplicateActionDialog.Action == DuplicateAction.Skip ||
+							 _duplicateActionDialog.Action == DuplicateAction.SkipAll) {
+							// do nothing;
+						}
 					}
+				} else {
+					SelectedAlbum.UploadFile (fileStream, title, mimeType);
 				}
-			} else {
-				SelectedAlbum.UploadPhoto (image, title, mimeType);
+			} finally {
+				fileStream.Dispose ();
 			}
 		}
 
@@ -346,69 +367,98 @@ namespace PicasaUploader
 			});
 		}
 
-		private void addPhotosButton_Click (object sender, EventArgs e)
+		private void addFilesButton_Click (object sender, EventArgs e)
 		{
-			if (_photos.Count == SelectedAlbum.Album.NumPhotosRemaining) {
-				MessageBox.Show ("You have exceeded the maxmimum number of photos you can upload to this album.",
+			if (_files.Count == SelectedAlbum.Album.NumPhotosRemaining) {
+				MessageBox.Show ("You have exceeded the maximum number of photos you can upload to this album.",
 					"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return;
 			}
 
 			if (openFileDialog.ShowDialog () == DialogResult.OK) {
-				if (_photos.Count + openFileDialog.FileNames.Length >
-					SelectedAlbum.Album.NumPhotosRemaining) {
-					MessageBox.Show ("By adding the selected " + openFileDialog.FileNames.Length + " photos " +
-						"you are going to exceeding the maximum number of photos per album by " + 
-						(SelectedAlbum.Album.NumPhotosRemaining - (_photos.Count + openFileDialog.FileNames.Length)) +
-						Environment.NewLine + "Please, select less photos", 
+				if (_files.Count + openFileDialog.FileNames.Length > SelectedAlbum.Album.NumPhotosRemaining) {
+					MessageBox.Show ("By adding the selected " + openFileDialog.FileNames.Length + " files " +
+						"you are going to exceed the maximum number of files per album by " +
+						(SelectedAlbum.Album.NumPhotosRemaining - (_files.Count + openFileDialog.FileNames.Length)) +
+						Environment.NewLine + "Please, select less files",
 						"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
+				AddFiles (openFileDialog.FileNames);
+			}		}
 
-				AddPhotos (openFileDialog.FileNames);
-			}
-		}
-
-		private void AddPhotos (string[] files)
+		private void AddFiles (string[] files)
 		{
-			var supportedFiles = files.Where (filePath => File.Exists (filePath) && 
-							  PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (filePath)));
+			IEnumerable<string> supportedExtensions = PicasaController.SupportedPhotoFormats.Union (PicasaController.SupportedVideoFormats);
+			var supportedFiles = files.Where (filePath => File.Exists (filePath) &&
+							  supportedExtensions.Contains (Path.GetExtension (filePath)));
+
+			bool filesExcluded = false;
+
 			foreach (string fileName in files) {
-				if (!_photos.Contains (fileName))
-					_photos.Add (fileName);
+				if (_files.Contains (fileName))
+					continue;
+
+				if (IsVideoFile (fileName)) {
+					if (new FileInfo (fileName).Length / Math.Pow (1024,2) >= (float)PicasaController.VideoFileSizeLimit) {
+						filesExcluded = true;
+						continue;
+					}
+				} else if (IsPhotoFile (fileName)) {
+					if (new FileInfo (fileName).Length / Math.Pow (1024, 2) >= (float)PicasaController.PhotoFileSizeLimit) {
+						filesExcluded = true;
+						continue;
+					}
+				} 
+
+				_files.Add (fileName);
 			}
 
-			photosListView.VirtualListSize = _photos.Count;
-			photosToAddCountLabel.Text = _photos.Count.ToString ();
+			if (filesExcluded) {
+				MessageBox.Show (String.Format ("Some files weren't added because they exceed either the maximum video file size limit of {0}MB or the maximum photo file size limit  of {1}MB",
+								PicasaController.VideoFileSizeLimit,
+								PicasaController.PhotoFileSizeLimit),
+						"Large Files Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+
+			filesListView.VirtualListSize = _files.Count;
+			filesToAddCountLabel.Text = _files.Count.ToString ();
 		}
 
-		private void removePhotosButton_Click(object sender, EventArgs e)
+		private void removeFilesButton_Click(object sender, EventArgs e)
 		{
-			for (int i = photosListView.SelectedIndices.Count - 1; i >= 0; i--) {
-				_photos.RemoveAt (photosListView.SelectedIndices[i]);
-				photosListView.VirtualListSize = photosListView.VirtualListSize - 1;
+			for (int i = filesListView.SelectedIndices.Count - 1; i >= 0; i--) {
+				_files.RemoveAt (filesListView.SelectedIndices[i]);
+				filesListView.VirtualListSize = filesListView.VirtualListSize - 1;
 			}
 		}
 
-		private void photosListView_RetrieveVirtualItem (object sender, RetrieveVirtualItemEventArgs e)
+		private void filesListView_RetrieveVirtualItem (object sender, RetrieveVirtualItemEventArgs e)
 		{
-			string fileName = _photos[e.ItemIndex];
-			if (_photosCache.ContainsKey (fileName))
-				e.Item = _photosCache[fileName];
-			else {
+			string fileName = _files[e.ItemIndex];
+
+			if (_filesListViewItemsCache.ContainsKey (fileName)) {
+				e.Item = _filesListViewItemsCache[fileName];
+			}  else {
 				string key = fileName;
+				Image thumbnail = null;
 
-				Image originalImage = Image.FromFile (fileName);
-				Image scaled = ImageScaler.ScaleToThumbnail (originalImage, photosImageList.ImageSize.Width, 
-									     photosImageList.ImageSize.Height, true);
-				photosImageList.Images.Add (fileName, scaled);
-				originalImage.Dispose ();
+				if (IsVideoFile (fileName)) {
+					thumbnail = Resources.VideoIcon;
+				} else if (IsPhotoFile (fileName)) {
+					Image originalImage = Image.FromFile (fileName);
+					thumbnail = ImageScaler.ScaleToThumbnail (originalImage, photosImageList.ImageSize.Width,
+										     photosImageList.ImageSize.Height, true);
+					originalImage.Dispose ();
+				} else {
+					throw new NotSupportedException ("Unsupported file type");
+				}
 
-				ListViewItem item = new ListViewItem (Path.GetFileName (fileName), 
+				photosImageList.Images.Add (fileName, thumbnail);
+				ListViewItem item = new ListViewItem (Path.GetFileName (fileName),
 									photosImageList.Images.IndexOfKey (fileName));
-				item.Tag = key;
 				e.Item = item;
-				_photosCache.Add (key, item);
+				_filesListViewItemsCache.Add (key, item);
 			}
 		}
 
@@ -422,28 +472,32 @@ namespace PicasaUploader
 			if (tabControl1.SelectedTab == photosTab) {
 				albumsListView.SelectedIndices.Clear ();
 				tabControl1.SelectedTab = albumsTab;
-				backButton.Visible = false;
+				backButton.Enabled = false;
 				nextButton.Text = "Next";
 			}
 		}
 
 		private void newAlbumButton_Click (object sender, EventArgs e)
 		{
-			NewAlbumDialog dialog = new NewAlbumDialog ();
-			if (dialog.ShowDialog (this) == DialogResult.OK) {
-				nextButton.Enabled = newAlbumButton.Enabled = false;
-				actionLabel.Text = "Creating album";
+			if (_picasa.Albums.Length >= PicasaController.AlbumsCountLimit) {
+				MessageBox.Show (String.Format ("Unfortunately you have reached limit of {0} albums allowed in PicasaWeb ", PicasaController.AlbumsCountLimit),
+						 "Albums Limit Reached", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				return;
+			}
 
-				ThreadPool.QueueUserWorkItem (delegate {
-					_picasa.CreateAlbum (dialog.AlbumTitle, dialog.AlbumDescription, 
-							     dialog.AlbumLocation, dialog.AlbumDate, 
-							     dialog.AlbumPublic);
-					this.Invoke ((MethodInvoker)delegate {
-						nextButton.Enabled = newAlbumButton.Enabled = true;
-						actionLabel.Text = READY_LABEL;
-						LoadAlbums ();
+			using (NewAlbumDialog dialog = new NewAlbumDialog ()) {
+				if (dialog.ShowDialog (this) == DialogResult.OK) {
+					nextButton.Enabled = newAlbumButton.Enabled = false;
+					actionLabel.Text = "Creating album";
+					ThreadPool.QueueUserWorkItem (delegate {
+						_picasa.CreateAlbum (dialog.AlbumTitle, dialog.AlbumDescription, dialog.AlbumLocation, dialog.AlbumDate, dialog.AlbumPublic);
+						this.Invoke ((MethodInvoker)delegate {
+							nextButton.Enabled = newAlbumButton.Enabled = true;
+							actionLabel.Text = READY_LABEL;
+							LoadAlbums ();
+						});
 					});
-				});
+				}
 			}
 		}
 
@@ -461,15 +515,15 @@ namespace PicasaUploader
 			new AboutBox ().ShowDialog ();
 		}
 
-		private void photosListView_DragDrop (object sender, DragEventArgs e)
+		private void filesListView_DragDrop (object sender, DragEventArgs e)
 		{
 			if (e.Data.GetDataPresent (DataFormats.FileDrop)) {
 				string[] files = (string[]) e.Data.GetData (DataFormats.FileDrop);
-				AddPhotos (files);
+				AddFiles (files);
 			}
 		}
 
-		private void photosListView_DragEnter (object sender, DragEventArgs e)
+		private void filesListView_DragEnter (object sender, DragEventArgs e)
 		{
 			if (e.Data.GetDataPresent (DataFormats.FileDrop))
 				e.Effect = DragDropEffects.Copy;

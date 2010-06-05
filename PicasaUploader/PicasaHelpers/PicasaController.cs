@@ -19,6 +19,7 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Globalization;
 namespace PicasaUploader
 {
 	class PicasaController
@@ -59,7 +60,7 @@ namespace PicasaUploader
 			}
 		}
 
-		public void CreateAlbum (string title, string description, string location, DateTime date, bool publik)
+		public void CreateAlbum (string title, string description, string location, DateTime date, bool makePublic)
 		{
 			if (String.IsNullOrEmpty (title))
 				throw new ArgumentException ("title is null or empty.", "title");
@@ -73,27 +74,43 @@ namespace PicasaUploader
 			entry.Title.Text = title;
 			entry.Summary.Text = description;
 			AlbumAccessor access = new AlbumAccessor (entry);
-			access.Access = publik ? "public" : "private";
+			access.Access = makePublic ? "public" : "private";
 			access.Location = location;
 			entry.SetPhotoExtensionValue ("timestamp", UnixTime.FromDateTime (date).ToString ());
 			_picasaService.Insert (new Uri (PicasaQuery.CreatePicasaUri (_username)), entry);
 		}
 
+		// TODO: Make this use a hashtable/dictionary internally
 		public static string GetMimeType (string fileName)
 		{
 			if (String.IsNullOrEmpty(fileName))
 				throw new ArgumentException("fileName is null or empty.", "fileName");
 
 			string extension = Path.GetExtension (fileName).ToLower ();
-			if (extension == ".gif")
+			if (String.Compare (extension, ".gif", StringComparison.InvariantCultureIgnoreCase) == 0)
 				return "image/gif";
-			else if (extension == ".jpeg" || extension == ".jpg")
+			else if (String.Compare (extension, ".jpeg", StringComparison.InvariantCultureIgnoreCase) == 0 || 
+				 String.Compare (extension, ".jpg", StringComparison.InvariantCultureIgnoreCase) == 0)
 				return "image/jpeg";
-			else if (extension == ".png")
+			else if (String.Compare (extension, ".png", StringComparison.InvariantCultureIgnoreCase) == 0)
 				return "image/png";
-			else if (extension == ".bmp")
+			else if (String.Compare (extension, ".bmp", StringComparison.InvariantCultureIgnoreCase) == 0)
 				return "image/bmp";
-
+			else if (String.Compare (extension, ".avi", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/avi";
+			else if (String.Compare (extension, ".mp4", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/mp4";
+			else if (String.Compare (extension, ".mov", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/quicktime";
+			else if (String.Compare (extension, ".mpeg", StringComparison.InvariantCultureIgnoreCase) == 0 ||
+				 String.Compare (extension, ".mpg", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/mpeg";
+			else if (String.Compare (extension, ".asf", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/x-ms-asf";
+			else if (String.Compare (extension, ".wmv", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/mp4";
+			else if (String.Compare (extension, ".3gp", StringComparison.InvariantCultureIgnoreCase) == 0)
+				return "video/3gpp";
 			return null;
 		}
 
@@ -101,6 +118,41 @@ namespace PicasaUploader
 		{
 			get { return new string[] { ".gif", ".png", ".jpeg", ".jpg", ".bmp" }; }
 		}
+
+		public static string[] SupportedVideoFormats {
+			get { return new string[] { ".avi", ".3gp", ".mp4", ".mov", ".mpg", ".mpeg", ".asf", ".wmv" }; }
+		}
+
+		#region Album Limits
+		
+		// Docs: http://picasa.google.com/support/bin/topic.py?topic=20043
+
+		/// <summary>
+		/// In MBs.
+		/// </summary>
+		public static int VideoFileSizeLimit
+		{
+			get { return 100; }
+		}
+
+		/// <summary>
+		/// In MBs
+		/// </summary>
+		public static int PhotoFileSizeLimit
+		{
+			get { return 20; }
+		}
+
+		public static int AlbumsCountLimit
+		{
+			get { return 10000; }
+		}
+
+		public static int AlbumFilesCountLimit
+		{
+			get { return 1000; }
+		}
+		#endregion
 	}
 
 	class AlbumInfo
@@ -136,26 +188,21 @@ namespace PicasaUploader
 			}
 		}
 
-		public uint MaxPhotosCount
-		{
-			get { return _accessor.NumPhotos + _accessor.NumPhotosRemaining; }
-		}
-
 		// Only checks if there is a photo with the same title and 
 		// does *not* check if the content matches.
 		//
-		public bool IsPhotoDupliate (string fileName)
+		public bool IsFileDuplicate (string fileName)
 		{
 			if (String.IsNullOrEmpty (fileName))
 				throw new ArgumentNullException ("fileName");
 
-			if (FindPhotoByTitle (Path.GetFileName (fileName)) != null)
+			if (FindFileByTitle (Path.GetFileName (fileName)) != null)
 				return true;
 
 			return false;
 		}
 
-		private PicasaEntry FindPhotoByTitle (string title)
+		private PicasaEntry FindFileByTitle (string title)
 		{	
 			if (String.IsNullOrEmpty (title))
 				throw new ArgumentNullException (title);
@@ -170,7 +217,7 @@ namespace PicasaUploader
 			return null;
 		}
 
-		public void UploadPhoto (string fileName)
+		public void UploadFile (string fileName)
 		{
 			if (String.IsNullOrEmpty (fileName))
 				throw new ArgumentException ("fileName is null or empty.", "fileName");
@@ -180,11 +227,11 @@ namespace PicasaUploader
 				throw new NotSupportedException ("Image type not supported");
 
 			using (Stream file = File.OpenRead (fileName)) {
-				UploadPhoto (file, fileName, PicasaController.GetMimeType (fileName));
+				UploadFile (file, fileName, PicasaController.GetMimeType (fileName));
 			}
 		}
 
-		public void UploadPhoto (Stream file, string title, string mimeType)
+		public void UploadFile (Stream file, string title, string mimeType)
 		{
 			if (String.IsNullOrEmpty (mimeType))
 				throw new ArgumentException ("mimeType is null or empty.", "mimeType");
@@ -193,23 +240,31 @@ namespace PicasaUploader
 			if (file == null)
 				throw new ArgumentNullException ("file", "file is null.");
 			
+			PhotoEntry entry = new PhotoEntry ();
+			entry.Title = new AtomTextConstruct (AtomTextConstructElementType.Title, title);
+			MediaFileSource fileSource = new MediaFileSource (file, title, mimeType);
+			entry.MediaSource = fileSource;
+
 			_picasaService.Insert (new Uri (PhotoQuery.CreatePicasaUri (_picasaService.Credentials.Username, _accessor.Id)),
-					       file, mimeType, title);
+					       entry);
+
+			//_picasaService.Insert (new Uri (PhotoQuery.CreatePicasaUri (_picasaService.Credentials.Username, _accessor.Id)),
+			//                       file, mimeType, title);
 		}
 
-		public void ReplacePhoto (string fileName)
+		public void ReplaceFile (string fileName)
 		{			
 			if (String.IsNullOrEmpty (fileName))
 				throw new ArgumentNullException ("fileName");
 
-			PicasaEntry photo = FindPhotoByTitle (Path.GetFileName (fileName));
+			PicasaEntry photo = FindFileByTitle (Path.GetFileName (fileName));
 			if (photo != null) {
 				_picasaService.Delete (photo);
-				UploadPhoto (fileName);
+				UploadFile (fileName);
 			}
 		}
 
-		public void ReplacePhoto (Stream file, string title, string mimeType)
+		public void ReplaceFile (Stream file, string title, string mimeType)
 		{
 			if (file == null)
 				throw new ArgumentNullException ("file", "file is null.");
@@ -218,10 +273,10 @@ namespace PicasaUploader
 			if (String.IsNullOrEmpty (mimeType))
 				throw new ArgumentException ("mimeType is null or empty.", "mimeType");
 
-			PicasaEntry photo = FindPhotoByTitle (title);
+			PicasaEntry photo = FindFileByTitle (title);
 			if (photo != null) {
 				_picasaService.Delete (photo);
-				UploadPhoto (file, title, mimeType);
+				UploadFile (file, title, mimeType);
 			}
 		}
 	}

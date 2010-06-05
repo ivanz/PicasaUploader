@@ -1,3 +1,11 @@
+[2010.06.05] PicasaUploader 0.5
+
+   - Add support for uploading videos. Supported files are: .avi, .mpeg, .mpg, .wmv, .3gp, .asf, .mp4, .mov.
+	 However PicasaWeb can still reject any of those if it doesn't like it. Note also that videos won't be 
+	 playable in the album immediately because they have to be postprocessed by PicasaWeb.
+   - File size limits: 20MB for photo files and 100MB for video files.
+
+
 [2009.12.16] PicasaUploader 0.4
 
    - Use system's proxy settings.

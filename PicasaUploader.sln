@@ -1,16 +1,16 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicasaUploader", "PicasaUploader\PicasaUploader.csproj", "{050903DF-B89A-40FD-9212-CEDD09E8408E}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{C3072F1A-79DE-40F1-8D9A-C8D64B28E1B7}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E7D7FD68-9C31-4FB5-AE00-85E0EFBEF243}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.txt = LICENSE.txt
 		README.txt = README.txt
 		Release Notes.txt = Release Notes.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicasaUploader", "PicasaUploader\PicasaUploader.csproj", "{050903DF-B89A-40FD-9212-CEDD09E8408E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{C3072F1A-79DE-40F1-8D9A-C8D64B28E1B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
