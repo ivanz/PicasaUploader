@@ -154,6 +154,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Google.GData.Client.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="PicasaUploader.sh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
