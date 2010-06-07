@@ -232,12 +232,12 @@ namespace PicasaUploader
 
 		private bool IsPhotoFile (string fileName)
 		{
-			return PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (fileName));
+			return PicasaController.SupportedPhotoFormats.Contains (Path.GetExtension (fileName).ToLowerInvariant ());
 		}
 
 		private bool IsVideoFile (string fileName)
 		{
-			return PicasaController.SupportedVideoFormats.Contains (Path.GetExtension (fileName));
+			return PicasaController.SupportedVideoFormats.Contains (Path.GetExtension (fileName).ToLowerInvariant ());
 		}
 
 		private void DoUpload (string fileName)
@@ -385,13 +385,14 @@ namespace PicasaUploader
 					return;
 				}
 				AddFiles (openFileDialog.FileNames);
-			}		}
+			}
+		}
 
 		private void AddFiles (string[] files)
 		{
 			IEnumerable<string> supportedExtensions = PicasaController.SupportedPhotoFormats.Union (PicasaController.SupportedVideoFormats);
 			var supportedFiles = files.Where (filePath => File.Exists (filePath) &&
-							  supportedExtensions.Contains (Path.GetExtension (filePath)));
+							  supportedExtensions.Contains (Path.GetExtension (filePath).ToLowerInvariant ()));
 
 			bool filesExcluded = false;
 
@@ -451,7 +452,7 @@ namespace PicasaUploader
 										     photosImageList.ImageSize.Height, true);
 					originalImage.Dispose ();
 				} else {
-					throw new NotSupportedException ("Unsupported file type");
+					throw new NotSupportedException ("Unsupported file type: " + fileName);
 				}
 
 				photosImageList.Images.Add (fileName, thumbnail);

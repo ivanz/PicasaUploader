@@ -1,3 +1,7 @@
+[2010.06.07] PicasaUploader 0.5.1
+
+   - Fix a case sensitivity bug, which was causing problems when trying to add e.g. "my.AVI".
+
 [2010.06.05] PicasaUploader 0.5
 
    - Add support for uploading videos. Supported files are: .avi, .mpeg, .mpg, .wmv, .3gp, .asf, .mp4, .mov.
