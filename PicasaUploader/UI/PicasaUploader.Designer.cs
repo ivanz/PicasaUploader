@@ -114,7 +114,7 @@
 			this.tabControl1.Multiline = true;
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size (558, 346);
+			this.tabControl1.Size = new System.Drawing.Size (586, 346);
 			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 9;
 			// 
@@ -129,7 +129,7 @@
 			this.loginTab.Location = new System.Drawing.Point (4, 5);
 			this.loginTab.Name = "loginTab";
 			this.loginTab.Padding = new System.Windows.Forms.Padding (3);
-			this.loginTab.Size = new System.Drawing.Size (550, 337);
+			this.loginTab.Size = new System.Drawing.Size (578, 337);
 			this.loginTab.TabIndex = 0;
 			this.loginTab.Text = "Login";
 			this.loginTab.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
 			this.albumsTab.Location = new System.Drawing.Point (4, 5);
 			this.albumsTab.Name = "albumsTab";
 			this.albumsTab.Padding = new System.Windows.Forms.Padding (3);
-			this.albumsTab.Size = new System.Drawing.Size (550, 337);
+			this.albumsTab.Size = new System.Drawing.Size (578, 337);
 			this.albumsTab.TabIndex = 1;
 			this.albumsTab.Text = "Select Album";
 			this.albumsTab.UseVisualStyleBackColor = true;
@@ -219,7 +219,7 @@
 			this.tableLayoutPanel3.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 18F));
 			this.tableLayoutPanel3.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel3.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 34F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size (544, 331);
+			this.tableLayoutPanel3.Size = new System.Drawing.Size (572, 331);
 			this.tableLayoutPanel3.TabIndex = 20;
 			// 
 			// albumsListView
@@ -231,7 +231,7 @@
 			this.albumsListView.LargeImageList = this.albumCoversImageList;
 			this.albumsListView.Location = new System.Drawing.Point (3, 21);
 			this.albumsListView.Name = "albumsListView";
-			this.albumsListView.Size = new System.Drawing.Size (538, 273);
+			this.albumsListView.Size = new System.Drawing.Size (566, 273);
 			this.albumsListView.TabIndex = 18;
 			this.albumsListView.UseCompatibleStateImageBehavior = false;
 			// 
@@ -247,7 +247,7 @@
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel3.Location = new System.Drawing.Point (3, 300);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size (538, 28);
+			this.panel3.Size = new System.Drawing.Size (566, 28);
 			this.panel3.TabIndex = 17;
 			// 
 			// newAlbumButton
@@ -255,7 +255,7 @@
 			this.newAlbumButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.newAlbumButton.Image = ((System.Drawing.Image)(resources.GetObject ("newAlbumButton.Image")));
 			this.newAlbumButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.newAlbumButton.Location = new System.Drawing.Point (449, 2);
+			this.newAlbumButton.Location = new System.Drawing.Point (477, 2);
 			this.newAlbumButton.Name = "newAlbumButton";
 			this.newAlbumButton.Size = new System.Drawing.Size (87, 23);
 			this.newAlbumButton.TabIndex = 19;
@@ -280,7 +280,7 @@
 			this.photosTab.Location = new System.Drawing.Point (4, 5);
 			this.photosTab.Name = "photosTab";
 			this.photosTab.Padding = new System.Windows.Forms.Padding (3);
-			this.photosTab.Size = new System.Drawing.Size (550, 337);
+			this.photosTab.Size = new System.Drawing.Size (578, 337);
 			this.photosTab.TabIndex = 2;
 			this.photosTab.Text = "Add Photos";
 			this.photosTab.UseVisualStyleBackColor = true;
@@ -300,7 +300,7 @@
 			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 18F));
 			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Absolute, 64F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size (544, 331);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size (572, 331);
 			this.tableLayoutPanel1.TabIndex = 19;
 			// 
 			// filesListView
@@ -313,7 +313,7 @@
 			this.filesListView.LargeImageList = this.photosImageList;
 			this.filesListView.Location = new System.Drawing.Point (3, 21);
 			this.filesListView.Name = "filesListView";
-			this.filesListView.Size = new System.Drawing.Size (538, 243);
+			this.filesListView.Size = new System.Drawing.Size (566, 243);
 			this.filesListView.TabIndex = 18;
 			this.filesListView.UseCompatibleStateImageBehavior = false;
 			this.filesListView.VirtualMode = true;
@@ -353,7 +353,7 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add (this.tableLayoutPanel4);
-			this.splitContainer1.Size = new System.Drawing.Size (538, 58);
+			this.splitContainer1.Size = new System.Drawing.Size (566, 58);
 			this.splitContainer1.SplitterDistance = 29;
 			this.splitContainer1.TabIndex = 19;
 			// 
@@ -368,7 +368,7 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point (0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size (538, 29);
+			this.panel1.Size = new System.Drawing.Size (566, 29);
 			this.panel1.TabIndex = 18;
 			// 
 			// filesToAddCountLabel
@@ -376,7 +376,7 @@
 			this.filesToAddCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 				    | System.Windows.Forms.AnchorStyles.Right)));
 			this.filesToAddCountLabel.AutoSize = true;
-			this.filesToAddCountLabel.Location = new System.Drawing.Point (417, 7);
+			this.filesToAddCountLabel.Location = new System.Drawing.Point (445, 7);
 			this.filesToAddCountLabel.Name = "filesToAddCountLabel";
 			this.filesToAddCountLabel.Size = new System.Drawing.Size (13, 13);
 			this.filesToAddCountLabel.TabIndex = 24;
@@ -387,7 +387,7 @@
 			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 				    | System.Windows.Forms.AnchorStyles.Right)));
 			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point (334, 7);
+			this.label8.Location = new System.Drawing.Point (362, 7);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size (65, 13);
 			this.label8.TabIndex = 23;
@@ -434,7 +434,7 @@
 			this.addFilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.addFilesButton.Image = ((System.Drawing.Image)(resources.GetObject ("addFilesButton.Image")));
 			this.addFilesButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.addFilesButton.Location = new System.Drawing.Point (451, 3);
+			this.addFilesButton.Location = new System.Drawing.Point (479, 3);
 			this.addFilesButton.Name = "addFilesButton";
 			this.addFilesButton.Size = new System.Drawing.Size (84, 23);
 			this.addFilesButton.TabIndex = 19;
@@ -456,7 +456,7 @@
 			this.tableLayoutPanel4.Name = "tableLayoutPanel4";
 			this.tableLayoutPanel4.RowCount = 1;
 			this.tableLayoutPanel4.RowStyles.Add (new System.Windows.Forms.RowStyle (System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel4.Size = new System.Drawing.Size (538, 25);
+			this.tableLayoutPanel4.Size = new System.Drawing.Size (566, 25);
 			this.tableLayoutPanel4.TabIndex = 2;
 			// 
 			// imageSizeComboBox
@@ -465,7 +465,7 @@
 			this.imageSizeComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.imageSizeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.imageSizeComboBox.FormattingEnabled = true;
-			this.imageSizeComboBox.Location = new System.Drawing.Point (341, 3);
+			this.imageSizeComboBox.Location = new System.Drawing.Point (369, 3);
 			this.imageSizeComboBox.Name = "imageSizeComboBox";
 			this.imageSizeComboBox.Size = new System.Drawing.Size (194, 21);
 			this.imageSizeComboBox.TabIndex = 0;
@@ -478,7 +478,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point (131, 7);
+			this.label2.Location = new System.Drawing.Point (159, 7);
 			this.label2.Name = "label2";
 			this.label2.Padding = new System.Windows.Forms.Padding (0, 0, 0, 5);
 			this.label2.Size = new System.Drawing.Size (204, 18);
@@ -582,7 +582,7 @@
 			// progressBar
 			// 
 			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar.Location = new System.Drawing.Point (144, 354);
+			this.progressBar.Location = new System.Drawing.Point (172, 354);
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size (177, 23);
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -604,7 +604,7 @@
 			this.nextButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.nextButton.Image = ((System.Drawing.Image)(resources.GetObject ("nextButton.Image")));
 			this.nextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.nextButton.Location = new System.Drawing.Point (462, 354);
+			this.nextButton.Location = new System.Drawing.Point (490, 354);
 			this.nextButton.Name = "nextButton";
 			this.nextButton.Size = new System.Drawing.Size (84, 23);
 			this.nextButton.TabIndex = 4;
@@ -618,7 +618,7 @@
 			this.backButton.Enabled = false;
 			this.backButton.Image = ((System.Drawing.Image)(resources.GetObject ("backButton.Image")));
 			this.backButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.backButton.Location = new System.Drawing.Point (371, 354);
+			this.backButton.Location = new System.Drawing.Point (399, 354);
 			this.backButton.Name = "backButton";
 			this.backButton.Size = new System.Drawing.Size (84, 23);
 			this.backButton.TabIndex = 5;
@@ -630,7 +630,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF (6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size (558, 386);
+			this.ClientSize = new System.Drawing.Size (586, 386);
 			this.Controls.Add (this.progressBar);
 			this.Controls.Add (this.aboutButton);
 			this.Controls.Add (this.actionLabel);
@@ -638,7 +638,7 @@
 			this.Controls.Add (this.backButton);
 			this.Controls.Add (this.tabControl1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject ("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size (525, 400);
+			this.MinimumSize = new System.Drawing.Size (602, 424);
 			this.Name = "PicasaUploaderForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "PicasaUploader";
