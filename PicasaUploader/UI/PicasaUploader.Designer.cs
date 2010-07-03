@@ -95,8 +95,8 @@
 			// 
 			// openFileDialog
 			// 
-			this.openFileDialog.Filter = "All Supported|*.jpg;*.jpeg\'*.png;*.gif;*.bmp;*.avi;*.wmv;*.mpg;*.mpeg;*.mp4;*.mov" +
-			    ";*.asf;*.3gp|Photos|*.jpg;*.jpeg\'*.png;*.gif;*.bmp|Videos|*.avi;*.wmv;*.mpg;*.mp" +
+			this.openFileDialog.Filter = "All Supported|*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.avi;*.wmv;*.mpg;*.mpeg;*.mp4;*.mov" +
+			    ";*.asf;*.3gp|Photos|*.jpg;*.jpeg;*.png;*.gif;*.bmp|Videos|*.avi;*.wmv;*.mpg;*.mp" +
 			    "eg;*.mp4;*.mov;*.asf;*.3gp";
 			this.openFileDialog.Multiselect = true;
 			// 
