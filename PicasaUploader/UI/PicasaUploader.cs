@@ -320,12 +320,9 @@ namespace PicasaUploader
 				foreach (AlbumInfo album in _picasa.Albums) {
 					this.Invoke ((MethodInvoker)delegate {
 						albumCoversImageList.Images.Add (album.Album.Id, album.AlbumCover);
-					});
-					ListViewItem item = new ListViewItem (album.Album.AlbumTitle);
-					item.Tag = album;
-					item.ImageKey = album.Album.Id;
-					this.Invoke ((MethodInvoker)delegate {
-						albumsListView.Items.Add (item);
+						ListViewItem item = new ListViewItem (album.Album.AlbumTitle);
+						item.Tag = album;
+						item.ImageKey = album.Album.Id;
 					});
 				}
 				this.Invoke ((MethodInvoker)delegate {
