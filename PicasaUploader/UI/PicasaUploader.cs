@@ -374,10 +374,10 @@ namespace PicasaUploader
 
 			if (openFileDialog.ShowDialog () == DialogResult.OK) {
 				if (_files.Count + openFileDialog.FileNames.Length > SelectedAlbum.Album.NumPhotosRemaining) {
-					MessageBox.Show ("By adding the selected " + openFileDialog.FileNames.Length + " files " +
-						"you are going to exceed the maximum number of files per album by " +
-						(SelectedAlbum.Album.NumPhotosRemaining - (_files.Count + openFileDialog.FileNames.Length)) +
-						Environment.NewLine + "Please, select less files",
+					MessageBox.Show (String.Format ("By adding the selected {0} files you are going to exceed the maximum number of files per album by {1}{2}Please, select less files", 
+                                                                        openFileDialog.FileNames.Length, 
+                                                                        (SelectedAlbum.Album.NumPhotosRemaining - (_files.Count + openFileDialog.FileNames.Length)), 
+                                                                        Environment.NewLine),
 						"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
