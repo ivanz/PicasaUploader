@@ -15,8 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_30168804CFAB6486E2738C135A595498"
+        "MsmKey" = "8:_3F31A42609F0961AB74D21FF65062B2E"
         "OwnerKey" = "8:_768813A28916460DA9C341499119A4C4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4B0341FB62711280D350505691A00141"
+        "OwnerKey" = "8:_768813A28916460DA9C341499119A4C4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4B0341FB62711280D350505691A00141"
+        "OwnerKey" = "8:_3F31A42609F0961AB74D21FF65062B2E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,38 +45,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7BF4443491E2A49CAAA0E6CBB95CF06D"
-        "OwnerKey" = "8:_768813A28916460DA9C341499119A4C4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7BF4443491E2A49CAAA0E6CBB95CF06D"
-        "OwnerKey" = "8:_30168804CFAB6486E2738C135A595498"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7BF4443491E2A49CAAA0E6CBB95CF06D"
-        "OwnerKey" = "8:_ECAAFEBFE3AF5E5820814A356614F589"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_BB5310C3DB7B4769B76AD9D572074404"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_ECAAFEBFE3AF5E5820814A356614F589"
+        "MsmKey" = "8:_E6B3272B4CFE85CDE18FEA7D412EFC46"
         "OwnerKey" = "8:_768813A28916460DA9C341499119A4C4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_ECAAFEBFE3AF5E5820814A356614F589"
-        "OwnerKey" = "8:_30168804CFAB6486E2738C135A595498"
+        "MsmKey" = "8:_E6B3272B4CFE85CDE18FEA7D412EFC46"
+        "OwnerKey" = "8:_3F31A42609F0961AB74D21FF65062B2E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E6B3272B4CFE85CDE18FEA7D412EFC46"
+        "OwnerKey" = "8:_4B0341FB62711280D350505691A00141"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -76,19 +76,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_30168804CFAB6486E2738C135A595498"
+        "OwnerKey" = "8:_3F31A42609F0961AB74D21FF65062B2E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ECAAFEBFE3AF5E5820814A356614F589"
+        "OwnerKey" = "8:_4B0341FB62711280D350505691A00141"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7BF4443491E2A49CAAA0E6CBB95CF06D"
+        "OwnerKey" = "8:_E6B3272B4CFE85CDE18FEA7D412EFC46"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -196,20 +196,51 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_30168804CFAB6486E2738C135A595498"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3F31A42609F0961AB74D21FF65062B2E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Google.GData.Photos, Version=1.4.0.2, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Google.GData.Photos, Version=1.7.0.34688, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_30168804CFAB6486E2738C135A595498"
+                    "_3F31A42609F0961AB74D21FF65062B2E"
                     {
                     "Name" = "8:Google.GData.Photos.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:Google.GData.Photos.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3C8029ECFB1A4DEE92C152F0B381AF7E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4B0341FB62711280D350505691A00141"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Google.GData.Extensions, Version=1.7.0.34687, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_4B0341FB62711280D350505691A00141"
+                    {
+                    "Name" = "8:Google.GData.Extensions.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Google.GData.Extensions.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3C8029ECFB1A4DEE92C152F0B381AF7E"
@@ -247,37 +278,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7BF4443491E2A49CAAA0E6CBB95CF06D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Google.GData.Client, Version=1.4.0.2, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_7BF4443491E2A49CAAA0E6CBB95CF06D"
-                    {
-                    "Name" = "8:Google.GData.Client.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Google.GData.Client.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_3C8029ECFB1A4DEE92C152F0B381AF7E"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB5310C3DB7B4769B76AD9D572074404"
             {
             "SourcePath" = "8:..\\PicasaUploader\\Google.GData.Client.dll.config"
@@ -298,20 +298,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ECAAFEBFE3AF5E5820814A356614F589"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E6B3272B4CFE85CDE18FEA7D412EFC46"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Google.GData.Extensions, Version=1.4.0.2, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Google.GData.Client, Version=1.7.0.34686, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_ECAAFEBFE3AF5E5820814A356614F589"
+                    "_E6B3272B4CFE85CDE18FEA7D412EFC46"
                     {
-                    "Name" = "8:Google.GData.Extensions.dll"
+                    "Name" = "8:Google.GData.Client.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Google.GData.Extensions.dll"
+            "SourcePath" = "8:Google.GData.Client.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3C8029ECFB1A4DEE92C152F0B381AF7E"
@@ -407,15 +407,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PicasaUploader"
-        "ProductCode" = "8:{B1CB2DB6-D94C-4C39-8297-0092B63947B6}"
-        "PackageCode" = "8:{2774F21A-8796-4FB0-89B8-22EBA368FED1}"
+        "ProductCode" = "8:{35AC80E8-FC25-4E96-BD1A-C248243A52AB}"
+        "PackageCode" = "8:{50DFDAA4-2F95-4F0B-803E-08B55F845FEF}"
         "UpgradeCode" = "8:{988174A5-9971-4CE9-B9E2-1A5F58C791F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.5.3"
+        "ProductVersion" = "8:0.5.4"
         "Manufacturer" = "8:Ivan Zlatev"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
