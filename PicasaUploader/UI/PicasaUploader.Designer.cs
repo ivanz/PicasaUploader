@@ -189,7 +189,7 @@
 			this.label3.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label3.Location = new System.Drawing.Point (6, 3);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size (98, 16);
+			this.label3.Size = new System.Drawing.Size (107, 18);
 			this.label3.TabIndex = 14;
 			this.label3.Text = "Step 1: Login";
 			// 
@@ -270,7 +270,7 @@
 			this.label9.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label9.Location = new System.Drawing.Point (3, 0);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size (172, 16);
+			this.label9.Size = new System.Drawing.Size (187, 18);
 			this.label9.TabIndex = 13;
 			this.label9.Text = "Step 2: Select an Album";
 			// 
@@ -333,7 +333,7 @@
 			this.label4.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label4.Location = new System.Drawing.Point (3, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size (167, 16);
+			this.label4.Size = new System.Drawing.Size (182, 18);
 			this.label4.TabIndex = 13;
 			this.label4.Text = "Step 3: Select the Files";
 			// 
@@ -565,7 +565,7 @@
 			this.label7.Font = new System.Drawing.Font ("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label7.Location = new System.Drawing.Point (3, 0);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size (181, 16);
+			this.label7.Size = new System.Drawing.Size (200, 18);
 			this.label7.TabIndex = 13;
 			this.label7.Text = "Step 3: Select the Photos";
 			// 

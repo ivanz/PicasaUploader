@@ -20,6 +20,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Globalization;
+using Google.Picasa;
 namespace PicasaUploader
 {
 	class PicasaController
@@ -33,8 +34,15 @@ namespace PicasaUploader
 			// No CA certificates on Mono for some reason
 			if (MonoRuntimeDetect.IsRunningOnMono)
 				ServicePointManager.CertificatePolicy = new NoCheckCertificatePolicy ();
+			System.Net.ServicePointManager.Expect100Continue = false;
+
+			// Desperate hacks to avoid random connection closed exceptions when uploading videos
+			GDataRequestFactory requestFactory = (GDataRequestFactory)_picasaService.RequestFactory;
+			requestFactory.KeepAlive = false;
+			requestFactory.Timeout = Int32.MaxValue;
 		}
 
+		// TODO: Update this code to use the new authentication token from the gdata api
                 public bool Login (string username, string password)
 		{
 			_picasaService.setUserCredentials (username, password);
@@ -70,14 +78,14 @@ namespace PicasaUploader
 			if (location == null)
 				location = String.Empty;
 
-			AlbumEntry entry = new AlbumEntry ();
-			entry.Title.Text = title;
-			entry.Summary.Text = description;
-			AlbumAccessor access = new AlbumAccessor (entry);
-			access.Access = makePublic ? "public" : "private";
-			access.Location = location;
-			entry.SetPhotoExtensionValue ("timestamp", UnixTime.FromDateTime (date).ToString ());
-			_picasaService.Insert (new Uri (PicasaQuery.CreatePicasaUri (_username)), entry);
+			Album album = new Album ();
+			album.Title = title;
+			album.Location = location;
+			album.Summary = description;
+			album.Access = makePublic ? "public" : "private";
+			album.Updated = date;
+			album.PicasaEntry.SetPhotoExtensionValue ("timestamp", UnixTime.FromDateTime (date).ToString ());
+			_picasaService.Insert (new Uri (PicasaQuery.CreatePicasaUri (_username)), album.PicasaEntry);
 		}
 
 		// TODO: Make this use a hashtable/dictionary internally
@@ -159,7 +167,6 @@ namespace PicasaUploader
 	{
 		private PicasaEntry _album;
 		private PicasaService _picasaService;
-                private AlbumAccessor _accessor;
 
 		internal AlbumInfo (PicasaEntry album, PicasaService picasaService)
 		{
@@ -170,25 +177,45 @@ namespace PicasaUploader
 			
 			_picasaService = picasaService;
 			_album = album;
-			_accessor = new AlbumAccessor (album);
+
+			NumPhotos = Int32.Parse (_album.GetPhotoExtensionValue (GPhotoNameTable.NumPhotos));
+			NumPhotosRemaining = Int32.Parse (_album.GetPhotoExtensionValue (GPhotoNameTable.NumPhotosRemaining));
+			Title = _album.Title.Text;
+			if (_album.Media.Thumbnails != null && _album.Media.Thumbnails.Count > 0)
+				AlbumCover = new Bitmap (_picasaService.Query (new Uri ((string)_album.Media.Thumbnails[0].Attributes["url"])));
+			Id = _album.GetPhotoExtensionValue (GPhotoNameTable.Id);
 		}
 
-		public AlbumAccessor Album
+		public int NumPhotos
 		{
-			get { return _accessor; }
+			get;
+			private set;
+		}
+
+		public string Title
+		{
+			get;
+			private set;
+		}
+
+		public string Id
+		{
+			get;
+			private set;
 		}
 
 		public Bitmap AlbumCover
 		{
-			get
-			{
-				if (_album.Media.Thumbnails != null && _album.Media.Thumbnails.Count > 0)
-					return new Bitmap (_picasaService.Query (new Uri ((string)_album.Media.Thumbnails[0].Attributes["url"])));
-				return null;
-			}
+			get;
+			private set;
 		}
 
-		// Only checks if there is a photo with the same title and 
+		public int NumPhotosRemaining {
+			get;
+			private set;
+		}
+
+                // Only checks if there is a photo with the same title and 
 		// does *not* check if the content matches.
 		//
 		public bool IsFileDuplicate (string fileName)
@@ -207,7 +234,7 @@ namespace PicasaUploader
 			if (String.IsNullOrEmpty (title))
 				throw new ArgumentNullException (title);
 
-			PhotoQuery photoQuery = new PhotoQuery (PicasaQuery.CreatePicasaUri (_picasaService.Credentials.Username, _accessor.Id));
+			PhotoQuery photoQuery = new PhotoQuery (PicasaQuery.CreatePicasaUri (_picasaService.Credentials.Username, Id));
 			var results = from photo in _picasaService.Query (photoQuery).Entries
 					where photo.Title.Text == title
 					select photo;
@@ -245,11 +272,8 @@ namespace PicasaUploader
 			MediaFileSource fileSource = new MediaFileSource (file, title, mimeType);
 			entry.MediaSource = fileSource;
 
-			_picasaService.Insert (new Uri (PhotoQuery.CreatePicasaUri (_picasaService.Credentials.Username, _accessor.Id)),
+			_picasaService.Insert (new Uri (PhotoQuery.CreatePicasaUri (_picasaService.Credentials.Username, Id)),
 					       entry);
-
-			//_picasaService.Insert (new Uri (PhotoQuery.CreatePicasaUri (_picasaService.Credentials.Username, _accessor.Id)),
-			//                       file, mimeType, title);
 		}
 
 		public void ReplaceFile (string fileName)

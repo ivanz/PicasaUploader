@@ -146,7 +146,7 @@ namespace PicasaUploader
 				backButton.Enabled = true;
 				nextButton.Text = "Upload";
 				filesToAddCountLabel.Text = _files.Count.ToString ();
-				albumPhotosCountLabel.Text = SelectedAlbum.Album.NumPhotos + "/"
+				albumPhotosCountLabel.Text = SelectedAlbum.NumPhotos + "/"
 						       + PicasaController.AlbumFilesCountLimit;
 				addFilesButton.Select ();
 			}
@@ -187,11 +187,11 @@ namespace PicasaUploader
 								// Retry?
 								bool retry = MessageBox.Show ("There is a problem uploading " + Path.GetFileName (_files[i]) +
 									Environment.NewLine + "Some possible causes can be: " + Environment.NewLine +
-									"\t - PicasaWeb rejected the file." + Environment.NewLine + 
+									"\t - PicasaWeb doesn't support this photo type or video encoding." + Environment.NewLine + 
 									"\t - Temporary Internet connection issues." + Environment.NewLine + 
 									"\t - Temporary PicasaWeb service disruption." + Environment.NewLine +
-									"\t - You have exceeded your PicasaWeb Quota." + Environment.NewLine +
-									"\t - No read access to the file." + Environment.NewLine +
+									"\t - You have exceeded your PicasaWeb quota." + Environment.NewLine +
+									"\t - Can't open the file." + Environment.NewLine +
 									Environment.NewLine +
 									"Would you like to retry?", "Upload Error", MessageBoxButtons.YesNo,
 									MessageBoxIcon.Error) == DialogResult.Yes;
@@ -209,7 +209,7 @@ namespace PicasaUploader
 				_sendToMode = false;
 
 				this.Invoke ((MethodInvoker)delegate {
-					albumPhotosCountLabel.Text = (SelectedAlbum.Album.NumPhotos + _files.Count) + "/"
+					albumPhotosCountLabel.Text = (SelectedAlbum.NumPhotos + _files.Count) + "/"
 							       + PicasaController.AlbumFilesCountLimit;
 				});
 
@@ -267,7 +267,7 @@ namespace PicasaUploader
 					} else {
 						this.Invoke ((MethodInvoker)delegate {
 							_duplicateActionDialog.ShowDialog (this, title,
-											   SelectedAlbum.Album.AlbumTitle);
+											   SelectedAlbum.Title);
 						});
 
 						if (_duplicateActionDialog.Action == DuplicateAction.Replace ||
@@ -317,15 +317,20 @@ namespace PicasaUploader
 			nextButton.Enabled = newAlbumButton.Enabled = false;
 			actionLabel.Text = "Loading albums";
 			ThreadPool.QueueUserWorkItem (delegate {
+				this.Invoke ((MethodInvoker)delegate {
+					albumsListView.SuspendLayout ();
+				});
 				foreach (AlbumInfo album in _picasa.Albums) {
 					this.Invoke ((MethodInvoker)delegate {
-						albumCoversImageList.Images.Add (album.Album.Id, album.AlbumCover);
-						ListViewItem item = new ListViewItem (album.Album.AlbumTitle);
+						albumCoversImageList.Images.Add (album.Id, album.AlbumCover);
+						ListViewItem item = new ListViewItem (album.Title);
 						item.Tag = album;
-						item.ImageKey = album.Album.Id;
+						item.ImageKey = album.Id;
+						albumsListView.Items.Add (item);
 					});
 				}
 				this.Invoke ((MethodInvoker)delegate {
+					albumsListView.ResumeLayout ();
 					nextButton.Enabled = newAlbumButton.Enabled = true;
 					actionLabel.Text = READY_LABEL;
 				});
@@ -366,17 +371,17 @@ namespace PicasaUploader
 
 		private void addFilesButton_Click (object sender, EventArgs e)
 		{
-			if (_files.Count == SelectedAlbum.Album.NumPhotosRemaining) {
+			if (_files.Count == SelectedAlbum.NumPhotosRemaining) {
 				MessageBox.Show ("You have exceeded the maximum number of photos you can upload to this album.",
 					"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				return;
 			}
 
 			if (openFileDialog.ShowDialog () == DialogResult.OK) {
-				if (_files.Count + openFileDialog.FileNames.Length > SelectedAlbum.Album.NumPhotosRemaining) {
+				if (_files.Count + openFileDialog.FileNames.Length > SelectedAlbum.NumPhotosRemaining) {
 					MessageBox.Show (String.Format ("By adding the selected {0} files you are going to exceed the maximum number of files per album by {1}{2}Please, select less files", 
                                                                         openFileDialog.FileNames.Length, 
-                                                                        (SelectedAlbum.Album.NumPhotosRemaining - (_files.Count + openFileDialog.FileNames.Length)), 
+                                                                        (SelectedAlbum.NumPhotosRemaining - (_files.Count + openFileDialog.FileNames.Length)), 
                                                                         Environment.NewLine),
 						"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
