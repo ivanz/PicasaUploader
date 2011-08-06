@@ -10,13 +10,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PicasaUploader</RootNamespace>
     <AssemblyName>PicasaUploader</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>Resources\PicasaUploader.ico</ApplicationIcon>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,16 +36,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>PicasaUploader.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Google.GData.Client, Version=1.4.0.2, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.Client, Version=1.8.0.27587, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\Google.GData.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Extensions, Version=1.4.0.2, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.Extensions, Version=1.8.0.27587, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\Google.GData.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Google.GData.Photos, Version=1.4.0.2, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL">
+    <Reference Include="Google.GData.Photos, Version=1.8.0.27590, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\Google.GData.Photos.dll</HintPath>
     </Reference>
@@ -95,6 +99,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -163,9 +168,6 @@
     <None Include="Resources\list-remove.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="deps\Google.GData.Client.dll" />
-    <Content Include="deps\Google.GData.Extensions.dll" />
-    <Content Include="deps\Google.GData.Photos.dll" />
     <Content Include="Resources\PicasaUploader.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

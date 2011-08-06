@@ -12,6 +12,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicasaUploader", "PicasaUpl
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{C3072F1A-79DE-40F1-8D9A-C8D64B28E1B7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{BA91587D-9C5D-4D46-97CC-A31285CFE814}"
+	ProjectSection(SolutionItems) = preProject
+		libs\Google.GData.Client.dll = libs\Google.GData.Client.dll
+		libs\Google.GData.Client.pdb = libs\Google.GData.Client.pdb
+		libs\Google.GData.Extensions.dll = libs\Google.GData.Extensions.dll
+		libs\Google.GData.Extensions.pdb = libs\Google.GData.Extensions.pdb
+		libs\Google.GData.Photos.dll = libs\Google.GData.Photos.dll
+		libs\Google.GData.Photos.pdb = libs\Google.GData.Photos.pdb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -118,10 +118,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
                     {
-                    "Name" = "8:.NET Framework 3.5 SP1"
-                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
@@ -188,7 +188,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v3.5"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -200,7 +200,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Google.GData.Photos, Version=1.7.0.34688, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Google.GData.Photos, Version=1.8.0.27590, Culture=neutral, PublicKeyToken=a25b50f2e8e3887a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3F31A42609F0961AB74D21FF65062B2E"
@@ -231,7 +231,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Google.GData.Extensions, Version=1.7.0.34687, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Google.GData.Extensions, Version=1.8.0.27587, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_4B0341FB62711280D350505691A00141"
@@ -302,7 +302,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Google.GData.Client, Version=1.7.0.34686, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Google.GData.Client, Version=1.8.0.27587, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_E6B3272B4CFE85CDE18FEA7D412EFC46"
@@ -408,7 +408,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PicasaUploader"
         "ProductCode" = "8:{35AC80E8-FC25-4E96-BD1A-C248243A52AB}"
-        "PackageCode" = "8:{50DFDAA4-2F95-4F0B-803E-08B55F845FEF}"
+        "PackageCode" = "8:{026695E8-73D6-4B55-98A2-1AB282014CF4}"
         "UpgradeCode" = "8:{988174A5-9971-4CE9-B9E2-1A5F58C791F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
