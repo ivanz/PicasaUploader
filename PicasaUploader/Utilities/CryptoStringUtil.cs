@@ -11,15 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Security;
 using System.Security.Cryptography;
-using System.Runtime.InteropServices;
 
 namespace PicasaUploader
 {
 	class CryptoStringUtil
 	{
-		static byte[] _entropy = System.Text.Encoding.Default.GetBytes ("this is a salt !@#$&%$14232345");
+		static byte[] _entropy = Encoding.Default.GetBytes ("this is a salt !@#$&%$14232345");
 
 		public static string EncryptString (string input)
 		{

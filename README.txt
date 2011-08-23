@@ -1,3 +1,7 @@
+=== Building the Source Code ===
+
+The application project build requires PostSharp to be installed from http://www.sharpcrafters.com/ .
+
 The Setup project build requires the Windows Installer SDK in order to fix the 
 "Send To" so that it appears in the right click menu. This happens as a post-build
 command.

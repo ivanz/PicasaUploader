@@ -15,9 +15,9 @@ using System.Drawing;
 
 namespace PicasaUploader
 {
-	class ImageSize
+	public class ImageSize
 	{
-		public static ImageSize Empty = new ImageSize ("Original Size", 0, 0);
+		public static ImageSize Original = new ImageSize ("Original Size", 0, 0);
 
 		public ImageSize (string label, int width, int height)
 		{
@@ -35,8 +35,8 @@ namespace PicasaUploader
 
 		public override string ToString ()
 		{
-			if (this == Empty)
-				return Empty.Label;
+			if (this == Original)
+				return Original.Label;
 			return String.Format ("{0} ({1}x{2})", Label, Width, Height);
 		}
 

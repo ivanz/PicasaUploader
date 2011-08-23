@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B02D190F243AA325E53E8395611B27B8"
+        "OwnerKey" = "8:_768813A28916460DA9C341499119A4C4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_BB5310C3DB7B4769B76AD9D572074404"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -89,6 +95,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E6B3272B4CFE85CDE18FEA7D412EFC46"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B02D190F243AA325E53E8395611B27B8"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -278,6 +290,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B02D190F243AA325E53E8395611B27B8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PostSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_B02D190F243AA325E53E8395611B27B8"
+                    {
+                    "Name" = "8:PostSharp.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PostSharp.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3C8029ECFB1A4DEE92C152F0B381AF7E"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB5310C3DB7B4769B76AD9D572074404"
             {
             "SourcePath" = "8:..\\PicasaUploader\\Google.GData.Client.dll.config"
@@ -407,15 +450,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PicasaUploader"
-        "ProductCode" = "8:{35AC80E8-FC25-4E96-BD1A-C248243A52AB}"
-        "PackageCode" = "8:{026695E8-73D6-4B55-98A2-1AB282014CF4}"
+        "ProductCode" = "8:{8EBD8BFD-40F0-4AC3-A70E-8BEB7FD8EFE0}"
+        "PackageCode" = "8:{2C1C8E7A-EB53-48FB-85FE-30EF9424F51B}"
         "UpgradeCode" = "8:{988174A5-9971-4CE9-B9E2-1A5F58C791F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.5.4"
+        "ProductVersion" = "8:0.6"
         "Manufacturer" = "8:Ivan Zlatev"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

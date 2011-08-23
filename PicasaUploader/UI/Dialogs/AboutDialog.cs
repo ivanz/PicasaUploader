@@ -17,9 +17,9 @@ using System.Windows.Forms;
 
 namespace PicasaUploader
 {
-	partial class AboutBox : Form
+	partial class AboutDialog : Form
 	{
-		public AboutBox ()
+		public AboutDialog ()
 		{
 			InitializeComponent ();
 			this.Text = String.Format ("About {0}", AssemblyTitle);

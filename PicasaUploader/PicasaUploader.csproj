@@ -52,6 +52,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\libs\Google.GData.Photos.dll</HintPath>
     </Reference>
+    <Reference Include="PostSharp, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core">
@@ -72,23 +73,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\ExecuteOnUIThreadAttribute.cs" />
+    <Compile Include="Commands\CreateAlbumCommand.cs" />
+    <Compile Include="Commands\LoadAlbumsCommand.cs" />
+    <Compile Include="Commands\LoginCommand.cs" />
+    <Compile Include="Commands\UploadPhotoCommand.cs" />
+    <Compile Include="UI\Controls\WizardPageChangedEventArgs.cs" />
+    <Compile Include="ViewModels\AddPhotosException.cs" />
+    <Compile Include="ViewModels\NewAlbumEditModel.cs" />
+    <Compile Include="ViewModels\UploadPhotosViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="PicasaHelpers\AlbumInfo.cs" />
     <Compile Include="PicasaHelpers\PicasaController.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AlbumsViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\AboutBox.resx">
-      <DependentUpon>AboutBox.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\AboutDialog.resx">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\DuplicateActionDialog.resx">
+    <EmbeddedResource Include="UI\Controls\ProgressMonitor.resx">
+      <DependentUpon>ProgressMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\Wizard.resx">
+      <DependentUpon>Wizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\WizardActionBar.resx">
+      <DependentUpon>WizardActionBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\DuplicateActionDialog.resx">
       <DependentUpon>DuplicateActionDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\NewAlbumDialog.resx">
+    <EmbeddedResource Include="UI\Dialogs\NewAlbumDialog.resx">
       <DependentUpon>NewAlbumDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\PicasaUploader.resx">
@@ -99,7 +121,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\WizardPages\AlbumsPage.resx">
+      <DependentUpon>AlbumsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WizardPages\LoginPage.resx">
+      <DependentUpon>LoginPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\WizardPages\PhotosPage.resx">
+      <DependentUpon>PhotosPage.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\PicasaUploader.ViewModels.NewAlbumEditModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -109,22 +141,48 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UI\AboutBox.cs">
+    <Compile Include="Services\AlbumContext.cs" />
+    <Compile Include="Services\IAlbumContext.cs" />
+    <Compile Include="Services\ITaskProgressMonitor.cs" />
+    <Compile Include="Services\IUIDispatcher.cs" />
+    <Compile Include="UI\Dialogs\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\AboutBox.Designer.cs">
-      <DependentUpon>AboutBox.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\AboutDialog.Designer.cs">
+      <DependentUpon>AboutDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\DuplicateActionDialog.cs">
+    <Compile Include="UI\Controls\WizardActionBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\WizardActionBar.Designer.cs">
+      <DependentUpon>WizardActionBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\WizardActionPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ProgressMonitor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ProgressMonitor.Designer.cs">
+      <DependentUpon>ProgressMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\SuccessEventArgs.cs" />
+    <Compile Include="UI\Controls\Wizard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\Wizard.Designer.cs">
+      <DependentUpon>Wizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\DuplicateActionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\DuplicateActionDialog.Designer.cs">
+    <Compile Include="UI\Dialogs\DuplicateActionDialog.Designer.cs">
       <DependentUpon>DuplicateActionDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\NewAlbumDialog.cs">
+    <Compile Include="UI\Dialogs\NewAlbumDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\NewAlbumDialog.Designer.cs">
+    <Compile Include="UI\Dialogs\NewAlbumDialog.Designer.cs">
       <DependentUpon>NewAlbumDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\PicasaUploader.cs">
@@ -133,8 +191,26 @@
     <Compile Include="UI\PicasaUploader.Designer.cs">
       <DependentUpon>PicasaUploader.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\CryptoString.cs" />
-    <Compile Include="Utilities\DuplicateAction.cs" />
+    <Compile Include="UI\WizardPages\AlbumsPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\WizardPages\AlbumsPage.Designer.cs">
+      <DependentUpon>AlbumsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WizardPages\LoginPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\WizardPages\LoginPage.Designer.cs">
+      <DependentUpon>LoginPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\WizardPages\PhotosPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\WizardPages\PhotosPage.Designer.cs">
+      <DependentUpon>PhotosPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\CryptoStringUtil.cs" />
+    <Compile Include="UI\Dialogs\DuplicateAction.cs" />
     <Compile Include="Utilities\ImageScaler.cs" />
     <Compile Include="Utilities\ImageSize.cs" />
     <Compile Include="Utilities\MonoRuntimeDetect.cs" />
@@ -170,6 +246,7 @@
   <ItemGroup>
     <Content Include="Resources\PicasaUploader.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
