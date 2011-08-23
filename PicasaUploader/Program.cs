@@ -25,16 +25,16 @@ namespace PicasaUploader
         [STAThread]
         static void Main(string[] args)
         {
-            //try {
-            //    AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            try {
+                AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Form mainForm = new PicasaUploaderForm(args);
                 UIDispatcher = (IUIDispatcher)mainForm;
                 Application.Run(mainForm);
-            //} catch (Exception e) {
-            //    UnhandledExceptionHandler(e);
-            //}
+            } catch (Exception e) {
+                UnhandledExceptionHandler(e);
+            }
         }
 
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
