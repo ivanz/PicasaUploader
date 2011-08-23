@@ -451,7 +451,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:PicasaUploader"
         "ProductCode" = "8:{8EBD8BFD-40F0-4AC3-A70E-8BEB7FD8EFE0}"
-        "PackageCode" = "8:{2C1C8E7A-EB53-48FB-85FE-30EF9424F51B}"
+        "PackageCode" = "8:{CB85D37F-10A9-4457-AE39-B8176F4A47AB}"
         "UpgradeCode" = "8:{988174A5-9971-4CE9-B9E2-1A5F58C791F5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
