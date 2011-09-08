@@ -8,12 +8,12 @@ namespace PicasaUploader.Commands
 {
     public class LoginCommand
     {
-        public LoginCommand (PicasaController picasa)
+        public LoginCommand (IPicasaController picasa)
         {
             Picasa = picasa;
         }
 
-        private PicasaController Picasa { get; set; }
+        private IPicasaController Picasa { get; set; }
 
         public bool Login(string username, string password)
         {

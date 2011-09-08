@@ -19,7 +19,7 @@ using Google.Picasa;
 
 namespace PicasaUploader
 {
-    public class PicasaController
+    public class PicasaController : IPicasaController
     {
         private readonly PicasaService _picasaService;
         private string _username;

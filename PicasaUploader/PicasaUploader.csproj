@@ -78,6 +78,7 @@
     <Compile Include="Commands\LoadAlbumsCommand.cs" />
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="Commands\UploadPhotoCommand.cs" />
+    <Compile Include="PicasaHelpers\IPicasaController.cs" />
     <Compile Include="UI\Controls\WizardPageChangedEventArgs.cs" />
     <Compile Include="ViewModels\AddPhotosException.cs" />
     <Compile Include="ViewModels\NewAlbumEditModel.cs" />
