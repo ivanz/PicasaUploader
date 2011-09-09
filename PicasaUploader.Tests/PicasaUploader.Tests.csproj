@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LoginSpecification.cs" />
+    <Compile Include="Specifications\LoginSpecification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
