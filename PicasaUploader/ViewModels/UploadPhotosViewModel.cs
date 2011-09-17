@@ -13,20 +13,20 @@ namespace PicasaUploader.ViewModels
     {
         private readonly IAlbumContext _albumContext;
 
-        public UploadPhotosViewModel(UploadPhotoCommand uploadCommand, IAlbumContext albumContext)
+        public UploadPhotosViewModel(IMediaUploadService uploadService, IAlbumContext albumContext)
         {
-            if (uploadCommand == null)
-                throw new ArgumentNullException("uploadCommand", "uploadCommand is null.");
+            if (uploadService == null)
+                throw new ArgumentNullException("uploadService", "picasaController is null.");
             if (albumContext == null)
                 throw new ArgumentNullException("albumContext", "albumContext is null.");
 
+            UploadService = uploadService;
             _albumContext = albumContext;
             Files = new List<string>();
-            UploadCommand = uploadCommand;
+            UploadCommand = new UploadPhotoCommand(uploadService);
         }
 
-
-        public AlbumInfo SelectedAlbum
+        public IAlbumInfo SelectedAlbum
         {
             get { return _albumContext.Album; }
             set { _albumContext.Album = value; }
@@ -37,8 +37,10 @@ namespace PicasaUploader.ViewModels
 
         public int AlbumPhotosLeftCount
         {
-            get { return PicasaController.AlbumFilesCountLimit - (SelectedAlbum.NumPhotos + Files.Count); }
+            get { return UploadService.AlbumFilesCountLimit - (SelectedAlbum.NumPhotos + Files.Count); }
         }
+
+        protected IMediaUploadService UploadService { get; private set; }
 
         public void AddFiles(string[] files)
         {
@@ -60,8 +62,8 @@ namespace PicasaUploader.ViewModels
             if (filesExcluded) {
                 throw new AddPhotosException(
                     String.Format("Some files weren't added because they exceed either the maximum video file size limit of {0}MB or the maximum photo file size limit  of {1}MB",
-                                   PicasaController.VideoFileSizeLimit,
-                                   PicasaController.PhotoFileSizeLimit));
+                                   UploadService.VideoFileSizeLimit,
+                                   UploadService.PhotoFileSizeLimit));
             }
         }
 
@@ -79,11 +81,11 @@ namespace PicasaUploader.ViewModels
         private bool IsInSizeLimits(string fileName)
         {
             if (IsVideoFile(fileName)) {
-                if (new FileInfo(fileName).Length / Math.Pow(1024, 2) >= (float)PicasaController.VideoFileSizeLimit) {
+                if (new FileInfo(fileName).Length / Math.Pow(1024, 2) >= (float)UploadService.VideoFileSizeLimit) {
                     return false;
                 }
             } else if (IsPhotoFile(fileName)) {
-                if (new FileInfo(fileName).Length / Math.Pow(1024, 2) >= (float)PicasaController.PhotoFileSizeLimit) {
+                if (new FileInfo(fileName).Length / Math.Pow(1024, 2) >= (float)UploadService.PhotoFileSizeLimit) {
                     return false;
                 }
             }
@@ -93,12 +95,12 @@ namespace PicasaUploader.ViewModels
 
         public bool IsPhotoFile(string fileName)
         {
-            return PicasaController.SupportedPhotoFormats.Contains(Path.GetExtension(fileName).ToLowerInvariant());
+            return UploadService.SupportedPhotoFormats.Contains(Path.GetExtension(fileName).ToLowerInvariant());
         }
 
         public bool IsVideoFile(string fileName)
         {
-            return PicasaController.SupportedVideoFormats.Contains(Path.GetExtension(fileName).ToLowerInvariant());
+            return UploadService.SupportedVideoFormats.Contains(Path.GetExtension(fileName).ToLowerInvariant());
         }
     }
 }

@@ -78,14 +78,32 @@
     <Compile Include="Commands\LoadAlbumsCommand.cs" />
     <Compile Include="Commands\LoginCommand.cs" />
     <Compile Include="Commands\UploadPhotoCommand.cs" />
-    <Compile Include="PicasaHelpers\IPicasaController.cs" />
+    <Compile Include="Services\Implementations\AlbumContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IAlbumContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IAlbumInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IMediaUploadService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\ITaskProgressMonitor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\IUIDispatcher.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UI\Controls\WizardPageChangedEventArgs.cs" />
+    <Compile Include="Utilities\MimeTypeUtil.cs" />
     <Compile Include="ViewModels\AddPhotosException.cs" />
     <Compile Include="ViewModels\NewAlbumEditModel.cs" />
     <Compile Include="ViewModels\UploadPhotosViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="PicasaHelpers\AlbumInfo.cs" />
-    <Compile Include="PicasaHelpers\PicasaController.cs" />
+    <Compile Include="Services\Implementations\Picasa\PicasaAlbumInfo.cs" />
+    <Compile Include="Services\Implementations\Picasa\PicasaUploadService.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -142,10 +160,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Services\AlbumContext.cs" />
-    <Compile Include="Services\IAlbumContext.cs" />
-    <Compile Include="Services\ITaskProgressMonitor.cs" />
-    <Compile Include="Services\IUIDispatcher.cs" />
     <Compile Include="UI\Dialogs\AboutDialog.cs">
       <SubType>Form</SubType>
     </Compile>

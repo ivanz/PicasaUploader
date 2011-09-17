@@ -19,12 +19,12 @@ using Google.Picasa;
 
 namespace PicasaUploader
 {
-    public class PicasaController : IPicasaController
+    public class PicasaUploadService : IMediaUploadService
     {
         private readonly PicasaService _picasaService;
         private string _username;
 
-        public PicasaController()
+        public PicasaUploadService()
         {
             _picasaService = new PicasaService("PicasaUploader");
             SetupWorkarounds();
@@ -61,9 +61,9 @@ namespace PicasaUploader
             return true;
         }
 
-        public AlbumInfo[] LoadAlbums()
+        public IAlbumInfo[] LoadAlbums()
         {
-            return _picasaService.Query(new AlbumQuery(PicasaQuery.CreatePicasaUri(_username))).Entries.Select(entry => new AlbumInfo((PicasaEntry)entry, _picasaService)).ToArray();
+            return _picasaService.Query(new AlbumQuery(PicasaQuery.CreatePicasaUri(_username))).Entries.Select(entry => new PicasaAlbumInfo((PicasaEntry)entry, _picasaService)).ToArray();
         }
 
         public void CreateAlbum(string title, string description, string location, DateTime date, bool makePublic)
@@ -88,46 +88,12 @@ namespace PicasaUploader
             _picasaService.Insert(new Uri(PicasaQuery.CreatePicasaUri(_username)), album.PicasaEntry);
         }
 
-        // TODO: Make this use a hashtable/dictionary internally
-        public static string GetMimeType(string fileName)
-        {
-            if (String.IsNullOrEmpty(fileName))
-                throw new ArgumentException("fileName is null or empty.", "fileName");
-
-            string extension = Path.GetExtension(fileName).ToLower();
-            if (String.Compare(extension, ".gif", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "image/gif";
-            else if (String.Compare(extension, ".jpeg", StringComparison.InvariantCultureIgnoreCase) == 0 ||
-                 String.Compare(extension, ".jpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "image/jpeg";
-            else if (String.Compare(extension, ".png", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "image/png";
-            else if (String.Compare(extension, ".bmp", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "image/bmp";
-            else if (String.Compare(extension, ".avi", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/avi";
-            else if (String.Compare(extension, ".mp4", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/mp4";
-            else if (String.Compare(extension, ".mov", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/quicktime";
-            else if (String.Compare(extension, ".mpeg", StringComparison.InvariantCultureIgnoreCase) == 0 ||
-                 String.Compare(extension, ".mpg", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/mpeg";
-            else if (String.Compare(extension, ".asf", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/x-ms-asf";
-            else if (String.Compare(extension, ".wmv", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/mp4";
-            else if (String.Compare(extension, ".3gp", StringComparison.InvariantCultureIgnoreCase) == 0)
-                return "video/3gpp";
-            return null;
-        }
-
-        public static string[] SupportedPhotoFormats
+        public string[] SupportedPhotoFormats
         {
             get { return new string[] { ".gif", ".png", ".jpeg", ".jpg", ".bmp" }; }
         }
 
-        public static string[] SupportedVideoFormats
+        public string[] SupportedVideoFormats
         {
             get { return new string[] { ".avi", ".3gp", ".mp4", ".mov", ".mpg", ".mpeg", ".asf", ".wmv" }; }
         }
@@ -139,7 +105,7 @@ namespace PicasaUploader
         /// <summary>
         /// In MBs.
         /// </summary>
-        public static int VideoFileSizeLimit
+        public int VideoFileSizeLimit
         {
             get { return 100; }
         }
@@ -147,17 +113,17 @@ namespace PicasaUploader
         /// <summary>
         /// In MBs
         /// </summary>
-        public static int PhotoFileSizeLimit
+        public int PhotoFileSizeLimit
         {
             get { return 20; }
         }
 
-        public static int AlbumsCountLimit
+        public int AlbumsCountLimit
         {
             get { return 10000; }
         }
 
-        public static int AlbumFilesCountLimit
+        public int AlbumFilesCountLimit
         {
             get { return 1000; }
         }

@@ -7,19 +7,19 @@ namespace PicasaUploader.Commands
 {
     public class LoadAlbumsCommand
     {
-        public LoadAlbumsCommand(PicasaController picasa)
+        public LoadAlbumsCommand(IMediaUploadService uploadService)
         {
-            Picasa = picasa;
+            UploadService = uploadService;
         }
 
-        private PicasaController Picasa { get; set; }
+        private IMediaUploadService UploadService { get; set; }
 
         /// <summary>
         /// This method is blocking.
         /// </summary>
-        public AlbumInfo[] LoadAlbums()
+        public IAlbumInfo[] LoadAlbums()
         {
-            return Picasa.LoadAlbums();
+            return UploadService.LoadAlbums();
         }
     }
 }

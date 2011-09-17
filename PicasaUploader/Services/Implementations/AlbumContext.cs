@@ -6,6 +6,6 @@ namespace PicasaUploader.Services
 {
     internal class AlbumContext : IAlbumContext
     {
-        public AlbumInfo Album { get; set; }
+        public IAlbumInfo Album { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace PicasaUploader.Tests
         static bool loggedIn;
 
         Establish with_a_valid_user = () => {
-            var picasaMock = new Mock<IPicasaController>();
+            var picasaMock = new Mock<IMediaUploadService>();
             picasaMock.Setup(controller => controller.Login(MoqIt.IsAny<string>(), MoqIt.IsAny<string>())).Returns(true);
 
             loginCommand = new LoginCommand(picasaMock.Object);

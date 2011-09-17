@@ -4,25 +4,29 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Drawing;
+using PicasaUploader.Utilities;
 
 namespace PicasaUploader.Commands
 {
     public class UploadPhotoCommand
     {
-        public UploadPhotoCommand(PicasaController picasa)
+        public UploadPhotoCommand(IMediaUploadService uploadService)
         {
-            Picasa = picasa;
+            if (uploadService == null)
+                throw new ArgumentNullException("uploadService", "uploadService is null.");
+
+            UploadService = uploadService;
         }
 
-        private PicasaController Picasa { get; set; }
+        private IMediaUploadService UploadService { get; set; }
 
         public void UploadPhoto(string file,
-                                 AlbumInfo album,
+                                 IAlbumInfo album,
                                  ImageSize size,
                                  Func<string /* file */ , DuplicateAction> duplicateHandlerQuery)
         {
             using (Stream scaledFileStream = ScaleImageDown(file, size)) {
-                string mimeType = PicasaController.GetMimeType(file);
+                string mimeType = MimeTypeUtil.GetMimeType(file);
 
                 if (album.IsFileDuplicate(file)) {
                     DuplicateAction duplicateAction = duplicateHandlerQuery(file);

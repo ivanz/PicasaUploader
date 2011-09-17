@@ -81,19 +81,19 @@ namespace PicasaUploader.UI.WizardPages
         private void LoadAlbums()
         {
             // This command blocks
-            AlbumInfo[] albums = ViewModel.LoadAlbumsCommand.LoadAlbums();
+            IAlbumInfo[] albums = ViewModel.LoadAlbumsCommand.LoadAlbums();
             LoadAlbumsIntoListView(albums);
         }
         
         [ExecuteOnUIThread]
-        private void LoadAlbumsIntoListView(AlbumInfo[] albums)
+        private void LoadAlbumsIntoListView(IAlbumInfo[] albums)
         {
             albumsListView.Clear();
             albumCoversImageList.Images.Clear();
 
             albumsListView.SuspendLayout();
 
-            foreach (AlbumInfo album in albums) {
+            foreach (PicasaAlbumInfo album in albums) {
                 string imageKey = album.Id;
                 albumCoversImageList.Images.Add(imageKey, album.AlbumCover);
                 albumsListView.Items.Add(new ListViewItem() { 
@@ -109,7 +109,7 @@ namespace PicasaUploader.UI.WizardPages
         private void OnAlbumSelectionChanged()
         {
             if (albumsListView.SelectedItems.Count == 1) {
-                ViewModel.SelectedAlbum = (AlbumInfo)albumsListView.SelectedItems[0].Tag;
+                ViewModel.SelectedAlbum = (IAlbumInfo)albumsListView.SelectedItems[0].Tag;
             } else {
                 ViewModel.SelectedAlbum = null;
             }
@@ -118,7 +118,7 @@ namespace PicasaUploader.UI.WizardPages
         public void CreateNewAlbum()
         {
             if (albumsListView.Items.Count >= ViewModel.AlbumsCountLimit) {
-                MessageBox.Show(String.Format("Unfortunately you have reached limit of {0} albums allowed in PicasaWeb ", PicasaController.AlbumsCountLimit),
+                MessageBox.Show(String.Format("Unfortunately you have reached limit of {0} albums allowed in PicasaWeb ", ViewModel.AlbumsCountLimit),
                          "Albums Limit Reached", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }

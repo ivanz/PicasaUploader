@@ -9,19 +9,19 @@ namespace PicasaUploader.Commands
 {
     public class CreateAlbumCommand
     {
-        public CreateAlbumCommand(PicasaController picasa)
+        public CreateAlbumCommand(IMediaUploadService uploadService)
         {
-            Picasa = picasa;
+            UploadService = uploadService;
         }
 
-        private PicasaController Picasa { get; set; }
+        private IMediaUploadService UploadService { get; set; }
 
         /// <summary>
         /// This method is blocking.
         /// </summary>
         public void CreateAlbum(NewAlbumEditModel model)
         {
-            Picasa.CreateAlbum(model.Title, model.Description, model.Location, model.Date, model.Public);
+            UploadService.CreateAlbum(model.Title, model.Description, model.Location, model.Date, model.Public);
         }
     }
 }

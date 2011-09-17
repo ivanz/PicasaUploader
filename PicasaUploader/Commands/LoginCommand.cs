@@ -8,16 +8,16 @@ namespace PicasaUploader.Commands
 {
     public class LoginCommand
     {
-        public LoginCommand (IPicasaController picasa)
+        public LoginCommand (IMediaUploadService uploadService)
         {
-            Picasa = picasa;
+            UploadService = uploadService;
         }
 
-        private IPicasaController Picasa { get; set; }
+        private IMediaUploadService UploadService { get; set; }
 
         public bool Login(string username, string password)
         {
-            return Picasa.Login(username, password);
+            return UploadService.Login(username, password);
         }
     }
 }

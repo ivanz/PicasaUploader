@@ -9,19 +9,17 @@ namespace PicasaUploader.ViewModels
     public class AlbumsViewModel
     {
         private readonly IAlbumContext _albumContext;
-
-        public AlbumsViewModel(CreateAlbumCommand createAlbumCommand, LoadAlbumsCommand loadAlbumsCommand, IAlbumContext albumContext)
+        private readonly IMediaUploadService _controller;
+        
+        public AlbumsViewModel(IMediaUploadService uploadService, IAlbumContext albumContext)
         {
-            if (createAlbumCommand == null)
-                throw new ArgumentNullException("createAlbumCommand", "createAlbumCommand is null.");
-            if (loadAlbumsCommand == null)
-                throw new ArgumentNullException("loadAlbumsCommand", "loadAlbumsCommand is null.");
             if (albumContext == null)
                 throw new ArgumentNullException("albumContext", "albumContext is null.");
 
+            _controller = uploadService;
+            CreateAlbumCommand = new CreateAlbumCommand(uploadService);
+            LoadAlbumsCommand = new LoadAlbumsCommand(uploadService);
             _albumContext = albumContext;
-            LoadAlbumsCommand = loadAlbumsCommand;
-            CreateAlbumCommand = createAlbumCommand;
         }
 
         public LoadAlbumsCommand LoadAlbumsCommand { get; private set; }
@@ -32,14 +30,19 @@ namespace PicasaUploader.ViewModels
             get { return _albumContext; }
         }
 
-        public AlbumInfo SelectedAlbum
+        protected IMediaUploadService UploadService
+        {
+            get { return _controller; }
+        }
+
+        public IAlbumInfo SelectedAlbum
         {
             get { return AlbumContext.Album; }
             set { AlbumContext.Album = value; }
         }
 
         public int AlbumsCountLimit {
-            get { return PicasaController.AlbumsCountLimit; }
+            get { return UploadService.AlbumsCountLimit; }
         }
     }
 }

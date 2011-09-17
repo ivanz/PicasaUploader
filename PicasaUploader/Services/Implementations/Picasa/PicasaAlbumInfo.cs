@@ -5,15 +5,16 @@ using Google.GData.Photos;
 using Google.GData.Client;
 using System.Drawing;
 using System.IO;
+using PicasaUploader.Utilities;
 
 namespace PicasaUploader
 {
-    public class AlbumInfo
+    public class PicasaAlbumInfo : IAlbumInfo
     {
         private readonly PicasaEntry _album;
         private readonly PicasaService _picasaService;
 
-        internal AlbumInfo(PicasaEntry album, PicasaService picasaService)
+        internal PicasaAlbumInfo(PicasaEntry album, PicasaService picasaService)
         {
             if (picasaService == null)
                 throw new ArgumentNullException("picasaService", "picasaService is null.");
@@ -95,12 +96,12 @@ namespace PicasaUploader
             if (String.IsNullOrEmpty(fileName))
                 throw new ArgumentException("fileName is null or empty.", "fileName");
 
-            string mimeType = PicasaController.GetMimeType(fileName);
+            string mimeType = MimeTypeUtil.GetMimeType(fileName);
             if (mimeType == null) // not supported
                 throw new NotSupportedException("Image type not supported");
 
             using (Stream file = File.OpenRead(fileName)) {
-                UploadFile(file, fileName, PicasaController.GetMimeType(fileName));
+                UploadFile(file, fileName, MimeTypeUtil.GetMimeType(fileName));
             }
         }
 

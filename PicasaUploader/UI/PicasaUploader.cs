@@ -45,28 +45,24 @@ namespace PicasaUploader
 
         public void OrchestrateSystem()
         {
-            PicasaController picasaController = new PicasaController();
-            LoginCommand loginCommand = new LoginCommand(picasaController);
-            LoginViewModel loginViewModel = new LoginViewModel(loginCommand);
+            PicasaUploadService picasaController = new PicasaUploadService();
+            LoginViewModel loginViewModel = new LoginViewModel(picasaController);
             LoginPage loginPage = new LoginPage(loginViewModel, progressMonitor);
 
             this.wizard.AddPage(loginPage);
 
             IAlbumContext albumContext = new AlbumContext();
-            CreateAlbumCommand createAlbumCommand = new CreateAlbumCommand(picasaController);
-            LoadAlbumsCommand loadAlbumsCommand = new LoadAlbumsCommand(picasaController);
-            AlbumsViewModel albumsViewModel = new AlbumsViewModel(createAlbumCommand, loadAlbumsCommand, albumContext);
+            AlbumsViewModel albumsViewModel = new AlbumsViewModel(picasaController, albumContext);
             AlbumsPage albumsPage = new AlbumsPage(albumsViewModel, ProgressMonitor);
 
             this.wizard.AddPage(albumsPage);
 
-            UploadPhotoCommand uploadPhotoCommand = new UploadPhotoCommand(picasaController);
-            UploadPhotosViewModel photosViewModel = new UploadPhotosViewModel(uploadPhotoCommand, albumContext);
+            UploadPhotosViewModel photosViewModel = new UploadPhotosViewModel(picasaController, albumContext);
             PhotosPage photosPage = new PhotosPage(photosViewModel, ProgressMonitor);
 
             this.wizard.AddPage(photosPage);
 
-            // FIXME: There is a temporal coupling here
+            // FIXME: There is a temporal coupling here (pages must be set before the actionbar is initialized
             wizardActionBar.Wizard = this.wizard;
         }
 

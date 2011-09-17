@@ -8,14 +8,25 @@ namespace PicasaUploader.ViewModels
 {
     public class LoginViewModel
     {
-        public LoginViewModel(LoginCommand loginCommand)
+        private readonly IMediaUploadService _controller;
+
+        public LoginViewModel(IMediaUploadService uploadService)
         {
-            this.LoginCommand = loginCommand;
+            if (uploadService == null)
+                throw new ArgumentNullException("uploadService", "uploadService is null.");
+
+            _controller = uploadService;
+            this.LoginCommand = new LoginCommand(uploadService);
         }
 
         public string Username { get; set; }
         public string Password { get; set; }
         public bool RememberCredentials { get; set; }
+
+        protected IMediaUploadService UploadService
+        {
+            get { return _controller; }
+        }
 
         public LoginCommand LoginCommand { get; private set; }
 
