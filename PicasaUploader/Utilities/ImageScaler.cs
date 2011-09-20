@@ -15,6 +15,7 @@ using System.Drawing;
 using System.IO;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace PicasaUploader
 {
@@ -84,8 +85,33 @@ namespace PicasaUploader
             gfx.DrawImage(image, 0, 0, newWidth, newHeight);
             gfx.Dispose();
 
+            CopyExif(image, newImage);
+
             return newImage;
         }
 
+        /// <summary>
+        /// Copies the EXIF data into the new image and adjusts the Width and Height 
+        /// accordingly.
+        /// </summary>
+        /// <param name="oldImage"></param>
+        /// <param name="newImage"></param>
+        private static void CopyExif(Image oldImage, Image newImage)
+        {
+            foreach (PropertyItem property in oldImage.PropertyItems) {
+                if (property.Id == EXIF_HEIGHT_ID) {
+                    byte[] newHeight = BitConverter.GetBytes(newImage.Height);
+                    property.Value = newHeight;
+                } else if (property.Id == EXIF_WIDTH_ID) {
+                    byte[] newWidth = BitConverter.GetBytes(newImage.Width);
+                    property.Value = newWidth;
+                }
+
+                newImage.SetPropertyItem(property);
+            }
+        }
+
+        private const int EXIF_WIDTH_ID = 0x0100;
+        private const int EXIF_HEIGHT_ID = 0x0101;
     }
 }
