@@ -1,3 +1,12 @@
+[2011.09.20] PicasaUploader 0.6.0
+
+   - [NEW] Ticking "Remember login details" will turn on automatic login when the app starts up.
+   - [NEW] EXIF data is now supported and preserved when scaling images down.
+   - [NEW] Added 2048x image size to the list of image scaling sizes
+   - [NEW] It is now possible to cancel the upload
+   - The source code has undergone a complete rewrite to be more modular and follow SOLID, DRY, etc where it made sense.
+     It should be now possible to write a WPF frontend or replace Picasa with another service.
+
 [2011.02.07] PicasaUploader 0.5.4
 
    - Fix video upload timeout issues.
