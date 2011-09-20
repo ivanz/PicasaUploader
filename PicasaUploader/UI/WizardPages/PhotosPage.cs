@@ -68,7 +68,8 @@ namespace PicasaUploader.UI.WizardPages
                 new ImageSize ("Small", 800, 600),
                 new ImageSize ("Medium", 1024, 768),
                 new ImageSize ("Large", 1280, 1024),
-                new ImageSize ("Extra Large", 1400, 1050)
+                new ImageSize ("Extra Large", 1400, 1050),
+                new ImageSize ("Mega Large", 2048, 1536)
             };
         }
 
