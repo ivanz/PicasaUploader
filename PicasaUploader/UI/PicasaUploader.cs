@@ -89,5 +89,16 @@ namespace PicasaUploader
         {
             AboutDialog.ShowDialog();
         }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            if (wizardActionBar.IsActionInProgress) {
+                if (MessageBox.Show(this, "An action is currently in progress. Are you sure you want to quit?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.No) {
+                    e.Cancel = true;
+                }
+            }
+
+            base.OnClosing(e);
+        }
     }
 }

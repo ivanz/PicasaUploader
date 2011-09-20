@@ -14,6 +14,7 @@ namespace PicasaUploader.UI.Controls
     {
         private const string Next_Button_String = "Next";
         private Wizard _wizard;
+        private bool _actionExecuting = false;
 
         /// <summary>
         /// Do not use this constructor it's only here for the WinForms designer surface
@@ -27,6 +28,11 @@ namespace PicasaUploader.UI.Controls
         public WizardActionBar(Wizard wizard) : this()
         {
             Wizard = wizard;
+        }
+
+        public bool IsActionInProgress
+        {
+            get { return _actionExecuting; }
         }
 
         [Browsable(false)]
@@ -101,7 +107,7 @@ namespace PicasaUploader.UI.Controls
         public void OnActionCompleted(object sender, SuccessEventArgs args)
         {
             this.Enabled = true;
-
+            this._actionExecuting = false;
             if (args.Success)
                 Wizard.Next();
         }
@@ -122,6 +128,7 @@ namespace PicasaUploader.UI.Controls
         private void OnActionStarting(object sender, EventArgs args)
         {
             this.Enabled = false;
+            _actionExecuting = true;
         }
 
         private void GoPrevious()
