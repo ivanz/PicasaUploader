@@ -44,7 +44,7 @@ namespace PicasaUploader.UI.Controls
                 this.Invoke((MethodInvoker)delegate {
                     OnActionCompleted(new SuccessEventArgs(t.Result));
                 });
-            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+            }, TaskContinuationOptions.None);
 
             task.Start();
         }
