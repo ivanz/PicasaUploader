@@ -37,6 +37,8 @@ namespace PicasaUploader.UI.WizardPages
         public override void Initialize()
         {
             usernameTextBox.Select();
+            if (ViewModel.RememberCredentials)
+                base.ExecuteActionAsync();
         }
 
         private void SyncModelWithUI()
