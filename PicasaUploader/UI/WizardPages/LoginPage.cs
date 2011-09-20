@@ -10,6 +10,7 @@ using PicasaUploader.UI.Controls;
 using PicasaUploader.Commands;
 using PicasaUploader.Services;
 using PicasaUploader.ViewModels;
+using System.Threading;
 
 namespace PicasaUploader.UI.WizardPages
 {
@@ -48,9 +49,14 @@ namespace PicasaUploader.UI.WizardPages
             ViewModel.RememberCredentials = this.rememberCheckBox.Checked;
         }
 
-        protected override Func<bool> Action
+        protected override Func<CancellationToken, bool> Action
         {
-            get { return DoLogin; }
+            get { return (cancellationToken) => { return DoLogin(); }; }
+        }
+
+        public override bool SupportsCancellation
+        {
+            get { return false; }
         }
 
         private bool DoLogin()

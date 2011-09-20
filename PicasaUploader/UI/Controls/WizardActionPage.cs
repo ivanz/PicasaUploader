@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using PicasaUploader.Aspects;
+using System.Threading;
 
 namespace PicasaUploader.UI.Controls
 {
@@ -15,7 +16,9 @@ namespace PicasaUploader.UI.Controls
         public event EventHandler<EventArgs> ActionStarting;
         public event EventHandler<SuccessEventArgs> ActionCompleted;
 
-        protected virtual Func<bool> Action {
+        private CancellationTokenSource _cancelationSource;
+
+        protected virtual Func<CancellationToken, bool> Action {
             get { return null; }
         }
 
@@ -38,17 +41,36 @@ namespace PicasaUploader.UI.Controls
                 return;
 
             OnActionStarting();
-            Task<bool> task = new Task<bool>(this.Action);
+            _cancelationSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = _cancelationSource.Token;
+            
+            Task<bool> task = new Task<bool>(() => {
+                return this.Action(cancellationToken);
+            }, cancellationToken);
+
             // on success
-            task.ContinueWith(t  => {
-                this.Invoke((MethodInvoker)delegate {
-                    OnActionCompleted(new SuccessEventArgs(t.Result));
-                });
-            }, TaskContinuationOptions.None);
+            task.ContinueWith(t => {
+                OnActionCompleted(new SuccessEventArgs(t.Result));
+            }, TaskContinuationOptions.OnlyOnRanToCompletion);
+
+            task.ContinueWith(t => {
+                OnActionCompleted(new SuccessEventArgs(t.Result));
+            }, TaskContinuationOptions.OnlyOnCanceled);
 
             task.Start();
         }
 
+        public void CancelAction()
+        {
+            if (SupportsCancellation)
+                _cancelationSource.Cancel();
+        }
+
+        public virtual bool SupportsCancellation
+        {
+            get { return false; }
+        }
+        
         [ExecuteOnUIThread]
         protected virtual void OnActionStarting()
         {

@@ -7,6 +7,7 @@ using PicasaUploader.Aspects;
 using System.Threading.Tasks;
 using PicasaUploader.Services;
 using PicasaUploader.ViewModels;
+using System.Threading;
 
 namespace PicasaUploader.UI.WizardPages
 {
@@ -26,10 +27,10 @@ namespace PicasaUploader.UI.WizardPages
             _progressMonitor = progressMonitor;
         }
 
-        protected override Func<bool> Action
+        protected override Func<CancellationToken, bool> Action
         {
             get {
-                return () => {
+                return (cancellationToken) => {
                     if (ViewModel.SelectedAlbum == null) {
                         MessageBox.Show("Please, select an album first", "Album", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return false;

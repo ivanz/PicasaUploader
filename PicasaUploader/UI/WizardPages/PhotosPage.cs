@@ -8,6 +8,8 @@ using PicasaUploader.Services;
 using PicasaUploader.ViewModels;
 using PicasaUploader.Properties;
 using System.IO;
+using System.Threading;
+using PicasaUploader.Aspects;
 
 namespace PicasaUploader.UI.WizardPages
 {
@@ -87,9 +89,13 @@ namespace PicasaUploader.UI.WizardPages
             this.filesToAddCountLabel.Text = ViewModel.Files.Count.ToString();
         }
 
-        protected override Func<bool> Action
+        public override bool SupportsCancellation {
+            get { return true; }
+        }
+
+        protected override Func<CancellationToken, bool> Action
         {
-            get { return () => { return DoUploadWithRetry(3); }; }
+            get { return (CancellationToken cancellationToken) => { return DoUploadWithRetry(cancellationToken, 3); }; }
         }
 
         private bool PromptToRetryAgain(string file)
@@ -106,13 +112,17 @@ namespace PicasaUploader.UI.WizardPages
                         MessageBoxIcon.Error) == DialogResult.Yes;
         }
 
-        private bool DoUploadWithRetry(int times)
+        private bool DoUploadWithRetry(CancellationToken cancellationToken, int times)
         {
             ProgressMonitor.StartTask(ViewModel.Files.Count, String.Format("Starting photo upload", ViewModel.Files.Count));
 
             bool uploadFinishedSuccessfully = true;
+            bool cancelled = false;
 
             for (int i = 0; i < ViewModel.Files.Count; i++) {
+                if (cancelled)
+                    break;
+
                 ProgressMonitor.Step(String.Format("Uploading photo {0}/{1}", i + 1, ViewModel.Files.Count));
                 string currentFile = ViewModel.Files[i];
 
@@ -121,6 +131,12 @@ namespace PicasaUploader.UI.WizardPages
                     try {
                         ViewModel.UploadCommand.UploadPhoto(currentFile, ViewModel.SelectedAlbum, SelectedImageSize, HandleDuplicateFileDuringUpload);
                         retryCounter = 0;
+
+                        if (cancellationToken.IsCancellationRequested) {
+                            cancelled = true;
+                            uploadFinishedSuccessfully = false;
+                            break;
+                        }
                     } catch {
                         retryCounter--;
                         if (retryCounter == 0) {
@@ -139,6 +155,7 @@ namespace PicasaUploader.UI.WizardPages
             return uploadFinishedSuccessfully;
         }
 
+        [ExecuteOnUIThread]
         protected override void OnActionCompleted(SuccessEventArgs args)
         {
             base.OnActionCompleted(args);
@@ -149,10 +166,11 @@ namespace PicasaUploader.UI.WizardPages
                 PromptToUploadMorePhotos();
         }
 
+        [ExecuteOnUIThread]
         protected override void OnActionStarting()
         {
-            base.OnActionStarting();
             this.removePhotosButton.Enabled = this.addFilesButton.Enabled = imageSizeComboBox.Enabled = false;
+            base.OnActionStarting();
         }
 
         public void PromptToUploadMorePhotos()

@@ -13,6 +13,10 @@ namespace PicasaUploader.UI.Controls
     public partial class WizardActionBar : UserControl
     {
         private const string Next_Button_String = "Next";
+        private const string Cancel_Button_String = "Cancel";
+        private const string Cancelling_Button_String = "Cancelling..";
+
+
         private Wizard _wizard;
         private bool _actionExecuting = false;
 
@@ -30,7 +34,7 @@ namespace PicasaUploader.UI.Controls
             Wizard = wizard;
         }
 
-        public bool IsActionInProgress
+        private bool IsActionInProgress
         {
             get { return _actionExecuting; }
         }
@@ -93,9 +97,13 @@ namespace PicasaUploader.UI.Controls
 
         private void UpdateButtons()
         {
+            DisableButtons();
+
             WizardActionPage actionPage = Wizard.CurrentPage;
-            if (actionPage != null)
+            if (actionPage != null) {
                 this.nextButton.Text = actionPage.ActionText ?? Next_Button_String;
+                nextButton.Enabled = true;
+            }
 
             if (Wizard.IsOnFirstPage)
                 this.backButton.Enabled = false;
@@ -106,8 +114,10 @@ namespace PicasaUploader.UI.Controls
         [ExecuteOnUIThread]
         public void OnActionCompleted(object sender, SuccessEventArgs args)
         {
-            this.Enabled = true;
             this._actionExecuting = false;
+
+            UpdateButtons();
+
             if (args.Success)
                 Wizard.Next();
         }
@@ -115,20 +125,37 @@ namespace PicasaUploader.UI.Controls
         [ExecuteOnUIThread]
         private void OnInitializationStarting(object sender, EventArgs args)
         {
-            this.Enabled = false;
+            DisableButtons();
         }
 
         [ExecuteOnUIThread]
         private void OnInitializationComplete(object sender, EventArgs args)
         {
-            this.Enabled = true;
+            EnableButtons();
         }
 
         [ExecuteOnUIThread]
         private void OnActionStarting(object sender, EventArgs args)
         {
-            this.Enabled = false;
+            DisableButtons();
             _actionExecuting = true;
+
+            if (Wizard.CurrentPage.SupportsCancellation) {
+                nextButton.Text = Cancel_Button_String;
+                nextButton.Enabled = true;
+            }
+        }
+
+        private void DisableButtons()
+        {
+            this.backButton.Enabled = false;
+            this.nextButton.Enabled = false;
+        }
+
+        private void EnableButtons()
+        {
+            this.backButton.Enabled = true;
+            this.nextButton.Enabled = true;
         }
 
         private void GoPrevious()
@@ -138,7 +165,17 @@ namespace PicasaUploader.UI.Controls
 
         private void nextButton_Click(object sender, EventArgs e)
         {
-            GoNext();
+            if (IsActionInProgress)
+                CancelCurrentAction();
+            else
+                GoNext();
+        }
+
+        private void CancelCurrentAction()
+        {
+            nextButton.Enabled = false;
+            nextButton.Text = Cancelling_Button_String;
+            Wizard.CurrentPage.CancelAction();
         }
 
         private void backButton_Click(object sender, EventArgs e)
